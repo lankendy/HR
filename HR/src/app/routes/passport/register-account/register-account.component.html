@@ -1,0 +1,28 @@
+<div class="d-flex-center">
+  <div>
+    <h2>{{'app.register-account.title' | translate}}</h2>
+    <div nz-row class="form mt-2">
+      <nz-card>
+        <form nz-form class role="form">
+          
+        </form>
+
+        <div nz-row class="mt-3">
+          <div nz-col [nzSpan]="16">
+            <ngx-recaptcha2 [siteKey]="siteKey"
+              size="normal" hl="en" theme="light" type="image">
+            </ngx-recaptcha2>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <div class="float-right">
+              <app-button-base text="{{'app.register-account.btn.gui' | translate}}"
+                iconType="upload"></app-button-base>
+              <app-button-cancel (onClick)="backToLogin()"></app-button-cancel>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+
+</div>

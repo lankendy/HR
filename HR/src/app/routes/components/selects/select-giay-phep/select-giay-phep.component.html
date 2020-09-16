@@ -1,0 +1,8 @@
+<app-select [formControl]="ngControl.control" [name]="name" [span]="span" labelContent="{{ labelContent | translate }}"
+  placeHolder="{{placeHolder | translate }}" [disabled]="disabled" [errorTip]="errorTip" [data]="giayPheps"
+  valueField="id" labelField="soGiayPhep" (onSearch)="onSearchGiayPhep($event)" [required]="required"
+  (onClickOpenSearch)="onClickOpenSearchGiayPhep()" (onSelectChange)="handleSelectChange($event)" [getObjectValue]="getObjectValue"></app-select>
+
+<app-search-giay-phep [isVisible]="showSearchGiayPhep"
+  title="{{'bao-cao-chat-luong-nuoc.step-ttcc.reports.create.giay-phep.search-giay-phep' | translate}}"
+  (callBack)="callBackSearchGiayPhep($event)" (onCancel)="onCancelSearchGiayPhep()"></app-search-giay-phep>
