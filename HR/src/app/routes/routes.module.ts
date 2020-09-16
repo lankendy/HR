@@ -16,7 +16,6 @@ import { UserLockComponent } from './passport/lock/lock.component';
 import { CallbackComponent } from './callback/callback.component';
 import { DatePickerUtcDirective } from './directives/date-picker-utc.directive';
 import { RegisterAccountComponent } from './passport/register-account/register-account.component';
-import { ButtonBaseComponent } from './components/buttons/button-base/button-base.component';
 import { ForgotPasswordComponent } from './passport/forgot-password/forgot-password.component';
 
 const COMPONENTS = [
