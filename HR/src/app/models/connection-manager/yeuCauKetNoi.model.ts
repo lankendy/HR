@@ -1,0 +1,43 @@
+import { ThongSoHoModel } from './thongSoHo.model';
+
+export class YeuCauKetNoiModel {
+    id: string;
+    giayPhep_ID: string;
+    soGiayPhep: string;
+    ngayCapPhep: string;
+    ngayYeuCauKetNoi: string;
+    tenCongTrinh: string;
+    loaiCongTrinh: string;
+    tongSoTram: number;
+    thoiHan: string;
+    trangThai: number;
+    diaDiemCongTrinh: string;
+    ngay_BDHieuLuc: string;
+    ngay_KTHieuLuc: string;
+    tinh: string;
+    huyen: string;
+    xa: string;
+    donViDuocCapPhep: string;
+    tenDonViXCP: string;
+    diaChiDonViXCP: string;
+    donViNhanTBCB_Email: string;
+    nguoiNhanTBCB_Email: string;
+    donViNhanTBCB_SDT: string;
+    nguoiNhanTBCB_SDT: string;
+    luuLuongKhaiThacLonNhat: string;
+    luuLuongXaToiThieu: string;
+    luuLuongLonNhat: string;
+    luuLuongKhaiThac: string;
+    luuLuongKhaiThacLonNhatThongBao: string;
+    luuLuongXaToiThieuThongBao: string;
+    luuLuongLonNhatThongBao: string;
+    luuLuongKhaiThacThongBao: string;
+    luuLuongKhaiThacLonNhatCanhBao: string;
+    luuLuongXaToiThieuCanhBao: string;
+    luuLuongLonNhatCanhBao: string;
+    luuLuongKhaiThacCanhBao: string;
+    tongLuongKhaiThac: string;
+    tongLuongKhaiThacThongBao: string;
+    tongLuongKhaiThacCanhBao: string;
+    thongSoHo: ThongSoHoModel[];
+}

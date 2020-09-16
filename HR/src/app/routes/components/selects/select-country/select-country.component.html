@@ -1,0 +1,8 @@
+<app-select [formControl]="ngControl.control" [name]="name" [span]="span" labelContent="{{ labelContent | translate }}"
+  placeHolder="{{placeHolder | translate }}" [disabled]="disabled" [errorTip]="errorTip" [data]="countries"
+  valueField="countryCode" labelField="name" (onSearch)="onSearchCountry($event)"
+  (onClickOpenSearch)="onClickOpenSearchCountry()"></app-select>
+
+<app-search-filenet-country [isVisible]="showSearchCountry"
+  title="{{'filenet.reader.create.search.select-country.title' | translate}}" (callBack)="callBackSearchCountry($event)"
+  (onCancel)="onCancelSearchCountry()"></app-search-filenet-country>
