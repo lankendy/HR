@@ -9,9 +9,9 @@ export class ButtonCancelComponent implements OnInit {
   @Input('text') text: string = null;
   @Input('buttonType') buttonType: string = null;
   @Input('popConfirm') popConfirm: boolean = true;
-  @Input('confirmOkI18n') confirmOkI18n: string = "layout.confirm.cancel.confirm.accept";
-  @Input('confirmCancelI18n') confirmCancelI18n: string = "layout.confirm.cancel.confirm.cancel";
-  @Input('confirmTitleI18n') confirmTitleI18n: string = "layout.confirm.discard-change";
+  @Input('confirmOkI18n') confirmOkI18n: string = "Xác nhận";
+  @Input('confirmCancelI18n') confirmCancelI18n: string = "Hủy";
+  @Input('confirmTitleI18n') confirmTitleI18n: string = "Bạn có muốn hủy bỏ thao tác?";
   @Input('iconType') iconType: string = "close";
   @Input('iconTheme') iconTheme: string = "outline";
   @Input('iconSpin') iconSpin: boolean = false;

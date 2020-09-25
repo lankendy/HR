@@ -1,3 +1,4 @@
+import { DsNhanVienComponent } from './nhan-vien/ds-nhan-vien/ds-nhan-vien.component';
 import { ChangePasswordComponent } from './passport/change-password/change-password.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -29,7 +30,13 @@ const routes: Routes = [
         path: 'exception',
         loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule),
       },
-
+    //nhan vien
+      {path: 'nhan-vien', loadChildren: () => import('./nhan-vien/nhan-vien.module').then(m => m.NhanVienModule)},
+      {path: 'ho-so', loadChildren: () => import('./quan-li-ho-so/quan-li-ho-so.module').then(m => m.QuanLiHoSoModule)},
+      {path: 'tai-khoan', loadChildren: () => import('./tai-khoan/tai-khoan.module').then(m => m.TaiKhoanModule)},
+      {path: 'san-pham', loadChildren: () => import('./quan-li-san-pham/san-pham.module').then(m => m.SanPhamModule)},
+      {path: 'hoa-don', loadChildren: () => import('./hoa-don/hoa-don.module').then(m => m.HoaDonModule)},
+      {path: 'su-kien', loadChildren: () => import('./su-kien/su-kien.module').then(m => m.SuKienModule)}
     ],
   },
   // passport

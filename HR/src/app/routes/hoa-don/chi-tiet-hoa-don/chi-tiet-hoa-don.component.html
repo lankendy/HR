@@ -1,0 +1,41 @@
+<page-header-wrapper>
+  <nz-card nzBordered='false'>
+    <form nz-form [formGroup]="editForm">
+      <div nz-row>
+        <h2>Thêm mới hóa đơn</h2>
+      </div>
+      <div nz-row>
+        <app-button-save></app-button-save>
+        <app-button-edit (onClick)="goToEdit()"></app-button-edit>
+        <app-button-cancel (onClick)="goToList()"></app-button-cancel>
+      </div>
+      <nz-card>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên người tạo</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên người tạo không được bỏ trống.">
+              <input nz-input name="ten" type="text" id="ten" formControlName="tenNguoiTao">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="tenSP" nzRequired>Tên sản phẩm</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên sản phẩm không được bỏ trống.">
+              <input nz-input name="tenSP" type="text" id="tenSP" formControlName="tenSP">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="ngaysinh" nzRequired>Số lượng</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Số lượng không được bỏ trống.">
+              <input nz-input name="ngaysinh" type="text" id="ngaysinh" formControlName="soLuong">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+  
+      </nz-card>
+    </form>
+  </nz-card>
+</page-header-wrapper>

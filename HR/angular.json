@@ -95,7 +95,7 @@
           "options": {
             "browserTarget": "ng-alain:build",
             "proxyConfig": "proxy.conf.json",
-            "port": 2161
+            "port": 4200
           },
           "configurations": {
             "production": {

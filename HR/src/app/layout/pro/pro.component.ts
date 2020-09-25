@@ -186,101 +186,165 @@ export class LayoutProComponent implements OnInit, AfterViewInit, OnDestroy {
     const lstMenu = [
       {
         name: 'Trang chủ',
-        code: 'menu.dashboard',
+        code: 'Trang chủ',
         iconClass: 'anticon anticon-dashboard',
         urlRewrite: '',
       },
       {
         name: 'Nhân viên',
-        code: 'menu.nhan-vien',
-        iconClass: 'anticon anticon-database',
+        code: 'Nhân viên',
+        iconClass: 'anticon anticon-usergroup-add',
         urlRewrite: '',
         subChild: [
           {
-            name: 'Tất cả nhân viên',
-            code: 'menu.catalog-manager.all-nhan-vien',
+            name: 'Danh sách nhân viên',
+            code: 'Danh sách nhân viên',
             iconClass: '',
-            urlRewrite: 'catalog/nhom-loai-cong-trinh',
+            urlRewrite: 'nhan-vien/danh-sach-nhan-vien',
+          },
+          {
+            name: 'Thêm mới nhân viên',
+            code: 'Thêm mới nhân viên',
+            iconClass: '',
+            urlRewrite: 'nhan-vien/them-moi-nhan-vien',
           }
         ],
       },
       {
-        name: 'Lương',
-        code: 'menu.luong',
-        iconClass: 'anticon anticon-database',
+        name: 'Quản lí hồ sơ',
+        code: 'Quản lí hồ sơ',
+        iconClass: 'anticon anticon-file-text',
         urlRewrite: '',
         subChild: [
           {
-            name: 'Lương cứng',
-            code: 'menu.luong-cung',
+            name: 'Danh sách hồ sơ',
+            code: 'Danh sách hồ sơ',
             iconClass: '',
-            urlRewrite: 'catalog/nhom-loai-cong-trinh',
-          }
-        ],
-      },
-      {
-        name: 'Hóa đơn',
-        code: 'menu.hoa-don',
-        iconClass: 'anticon anticon-database',
-        urlRewrite: '',
-        subChild: [
+            urlRewrite: 'ho-so/danh-sach-ho-so',
+          },
           {
-            name: 'Báo cáo hóa đơn theo ngày',
-            code: 'menu.hoa-don-ngay',
+            name: 'Thêm mới hồ sơ',
+            code: 'Thêm mới hồ sơ',
             iconClass: '',
-            urlRewrite: 'connection/bao-cao-chat-luong-nuoc',
+            urlRewrite: 'ho-so/them-ho-so',
           },
         ],
       },
       {
         name: 'Tài khoản',
-        code: 'menu.tai-khoan',
-        iconClass: 'anticon anticon-database',
+        code: 'Tài khoản',
+        iconClass: 'anticon anticon-lock',
         urlRewrite: '',
         subChild: [
           {
-            name: 'Phân quyền',
-            code: 'menu.tai-khoan.phan-quyen',
+            name: 'Danh sách tài khoản',
+            code: 'Danh sách tài khoản',
             iconClass: '',
-            urlRewrite: 'connection/bao-cao-chat-luong-nuoc',
+            urlRewrite: 'tai-khoan/danh-sach-tai-khoan',
+          },
+          {
+            name: 'Thêm mới tài khoản',
+            code: 'Thêm mới tài khoản',
+            iconClass: '',
+            urlRewrite: 'tai-khoan/them-tai-khoan',
+          },
+        ],
+      },
+      {
+        name: 'Quản lí sản phẩm',
+        code: 'Quản lí sản phẩm',
+        iconClass: 'anticon anticon-mobile',
+        urlRewrite: '',
+        subChild: [
+          {
+            name: 'Danh sách sản phẩm',
+            code: 'Danh sách sản phẩm',
+            iconClass: '',
+            urlRewrite: 'san-pham/danh-sach-san-pham',
+          },
+          {
+            name: 'Thêm mới sản phẩm',
+            code: 'Thêm mới sản phẩm',
+            iconClass: '',
+            urlRewrite: 'san-pham/them-san-pham',
+          },
+        ],
+      },
+      {
+        name: 'Quản lí hóa đơn',
+        code: 'Quản lí hóa đơn',
+        iconClass: 'anticon anticon-wallet',
+        urlRewrite: '',
+        subChild: [
+          {
+            name: 'Danh sách hóa đơn',
+            code: 'Danh sách hóa đơn',
+            iconClass: '',
+            urlRewrite: 'hoa-don/danh-sach-hoa-don',
+          },
+          {
+            name: 'Thêm mới hóa đơn',
+            code: 'Thêm mới hóa đơn',
+            iconClass: '',
+            urlRewrite: 'hoa-don/them-hoa-don',
+          },
+        ],
+      },
+      {
+        name: 'Quản lí sự kiện',
+        code: 'Quản lí sự kiện',
+        iconClass: 'anticon anticon-snippets',
+        urlRewrite: '',
+        subChild: [
+          {
+            name: 'Danh sách sự kiện',
+            code: 'Danh sách sự kiện',
+            iconClass: '',
+            urlRewrite: 'su-kien/danh-sach-su-kien',
+          },
+          {
+            name: 'Thêm mới sự kiện',
+            code: 'Thêm mới sự kiện',
+            iconClass: '',
+            urlRewrite: 'su-kien/them-su-kien',
           },
         ],
       },
       
     ];
-    const itemMenu = lstMenu.find(x => x.code == 'menu.connection-manager');
-    if(this.settings.user.right.indexOf("FF01") >= 0 || this.settings.user.right.indexOf("FF02") >= 0) {
-      if(itemMenu && itemMenu.subChild) {
-        itemMenu.subChild.push({
-          name: 'Kết nối chờ phê duyệt',
-          code: 'menu.connection-manager.connection-pending',
-          iconClass: '',
-          urlRewrite: 'connection/yeu-cau-ket-noi/danh-sach/waiting-approve',
+    // const itemMenu = lstMenu.find(x => x.code == 'menu.connection-manager');
+    // if(this.settings.user.right.indexOf("FF01") >= 0 || this.settings.user.right.indexOf("FF02") >= 0) {
+    //   if(itemMenu && itemMenu.subChild) {
+    //     itemMenu.subChild.push({
+    //       name: 'Kết nối chờ phê duyệt',
+    //       code: 'menu.connection-manager.connection-pending',
+    //       iconClass: '',
+    //       urlRewrite: 'connection/yeu-cau-ket-noi/danh-sach/waiting-approve',
 
-        });
-        itemMenu.subChild.push({
-          name: 'Kết nối đã phê duyệt',
-          code: 'menu.connection-manager.connection-approved',
-          iconClass: '',
-          urlRewrite: 'connection/yeu-cau-ket-noi/danh-sach/approved',
-        });
-        itemMenu.subChild.push({
-          name: 'Tra cứu',
-          code: 'menu.connection-manager.tra-cuu',
-          iconClass: '',
-          urlRewrite: 'connection/yeu-cau-ket-noi/danh-sach/tra-cuu',
-        });
-      }
-    } else {
-      if(itemMenu && itemMenu.subChild) {
-        itemMenu.subChild.push({
-          name: 'Yêu cầu kết nối',
-          code: 'menu.connection-manager.connection-request',
-          iconClass: '',
-          urlRewrite: 'connection/yeu-cau-ket-noi',
-        });
-      }
-    }
+    //     });
+    //     itemMenu.subChild.push({
+    //       name: 'Kết nối đã phê duyệt',
+    //       code: 'menu.connection-manager.connection-approved',
+    //       iconClass: '',
+    //       urlRewrite: 'connection/yeu-cau-ket-noi/danh-sach/approved',
+    //     });
+    //     itemMenu.subChild.push({
+    //       name: 'Tra cứu',
+    //       code: 'menu.connection-manager.tra-cuu',
+    //       iconClass: '',
+    //       urlRewrite: 'connection/yeu-cau-ket-noi/danh-sach/tra-cuu',
+    //     });
+    //   }
+    // } else {
+    //   if(itemMenu && itemMenu.subChild) {
+    //     itemMenu.subChild.push({
+    //       name: 'Yêu cầu kết nối',
+    //       code: 'menu.connection-manager.connection-request',
+    //       iconClass: '',
+    //       urlRewrite: 'connection/yeu-cau-ket-noi',
+    //     });
+    //   }
+    // }
 
     const rootMenu = [
       {

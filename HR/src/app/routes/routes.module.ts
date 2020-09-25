@@ -17,6 +17,12 @@ import { CallbackComponent } from './callback/callback.component';
 import { DatePickerUtcDirective } from './directives/date-picker-utc.directive';
 import { RegisterAccountComponent } from './passport/register-account/register-account.component';
 import { ForgotPasswordComponent } from './passport/forgot-password/forgot-password.component';
+import { NhanVienModule } from './nhan-vien/nhan-vien.module';
+import { TaiKhoanModule } from './tai-khoan/tai-khoan.module';
+import { QuanLiHoSoModule } from './quan-li-ho-so/quan-li-ho-so.module';
+import { SanPhamModule } from './quan-li-san-pham/san-pham.module';
+import { HoaDonModule } from './hoa-don/hoa-don.module';
+import { SuKienModule } from './su-kien/su-kien.module';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -34,8 +40,19 @@ const COMPONENTS = [
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
-  imports: [SharedModule, ComponentsModule, RouteRoutingModule, NgxCaptchaModule],
+  imports: [
+    SharedModule,
+    ComponentsModule,
+    RouteRoutingModule,
+    NgxCaptchaModule,
+    NhanVienModule,
+    TaiKhoanModule,
+    QuanLiHoSoModule,
+    SanPhamModule,
+    HoaDonModule,
+    SuKienModule
+  ],
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT, DatePickerUtcDirective],
   entryComponents: COMPONENTS_NOROUNT,
 })
-export class RoutesModule {}
+export class RoutesModule { }

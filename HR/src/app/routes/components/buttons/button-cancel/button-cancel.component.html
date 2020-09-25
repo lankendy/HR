@@ -1,6 +1,6 @@
 <ng-container *ngIf="popConfirm ; else buttonWithPopConfirm">
-  <button nz-button nz-popconfirm nzOkText="{{ confirmOkI18n | translate }}"
-    nzCancelText="{{ confirmCancelI18n | translate }}" nzPopconfirmTitle="{{ confirmTitleI18n | translate }}"
+  <button nz-button nz-popconfirm [nzOkText]="confirmOkI18n"
+    [nzCancelText]="confirmCancelI18n" [nzPopconfirmTitle]="confirmTitleI18n"
     (nzOnConfirm)="onConfirm()" [nzType]="buttonType" class="mr-2">
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </button>
@@ -19,6 +19,6 @@
     {{ text }}
   </ng-container>
   <ng-template #defaultText>
-    {{ 'layout.btn.cancel' | translate }}
+    Hủy bỏ
   </ng-template>
 </ng-template>
