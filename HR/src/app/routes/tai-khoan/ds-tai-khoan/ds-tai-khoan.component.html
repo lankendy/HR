@@ -1,0 +1,56 @@
+<page-header-wrapper>
+  <nz-card>
+    <div nz-row [nzGutter]="8">
+      <div nz-col nzSpan="12">
+        <div nz-row>
+            <h2>Danh sách tài khoản</h2>
+        </div>
+        <div nz-row>
+          <app-button-reload (onClick)="load()"></app-button-reload>
+          <app-button-create (onClick)="goToCreate()"></app-button-create>
+        </div>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="Tìm kiếm ..." />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+  </nz-card>    
+  <nz-card>
+    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+      <thead>
+        <tr>
+          <th
+            [nzSelections]="listOfSelection"
+            [(nzChecked)]="checked"
+            [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"
+          ></th>
+          <th>STT</th>
+          <th>Tên</th>
+          <th>Email</th>
+          <th>Mật khẩu</th>
+          <th>Chức năng</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of rowSelectionTable.data; let i = index">
+          <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+          <td>{{i + 1}}</td>
+          <td>{{ data.ten }}</td>
+          <td>{{ data.email }}</td>
+          <td>{{ data.matKhau }}</td>
+          <td>{{ data.chucNang}}</td>
+          <td (click)="getDetail()">
+            <i nz-icon nzType="info-circle" nzTheme="twotone"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</page-header-wrapper>

@@ -1,0 +1,48 @@
+<page-header-wrapper>
+  <nz-card nzBordered='false'>
+    <form nz-form [formGroup]="editForm">
+      <div nz-row>
+        <h2>Chi tiết sản phẩm</h2>
+      </div>
+      <div nz-row>
+        <app-button-save></app-button-save>
+        <app-button-edit (onClick)="goToEdit()"></app-button-edit>
+        <app-button-cancel (onClick)="goToList()"></app-button-cancel>
+      </div>
+      <nz-card>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên sản phẩm</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên sản phẩm không được bỏ trống.">
+              <input nz-input name="ten" type="text" id="ten" formControlName="tenSP">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="giaNhap" nzRequired>Giá nhập</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Giá nhập không được bỏ trống.">
+              <input nz-input name="giaNhap" type="text" id="giaNhap" formControlName="giaNhap">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="giaBan" nzRequired>Giá bán</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Giá bán không được bỏ trống.">
+              <input nz-input name="giaBan" type="text" id="giaBan" formControlName="giaBan">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="sl">Số lượng</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="sl" type="sl" id="sl" formControlName="soLuong">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+      </nz-card>
+    </form>
+  </nz-card>
+</page-header-wrapper>

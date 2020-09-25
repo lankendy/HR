@@ -1,0 +1,48 @@
+<page-header-wrapper>
+  <nz-card nzBordered='false'>
+    <form nz-card [formGroup]="editForm">
+      <div nz-row>
+        <h2>Chi tiết hồ sơ</h2>
+      </div>
+      <div nz-row>
+        <app-button-save></app-button-save>
+        <app-button-edit (onClick)="goToEdit()"></app-button-edit>
+        <app-button-cancel (onClick)="goToList()"></app-button-cancel>
+      </div>
+      <nz-card>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên nhân viên</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên nhân viên không được bỏ trống.">
+              <input nz-input name="ten" type="text" id="ten" formControlName="tenNhanVien">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="type" nzRequired>Kiểu hồ sơ</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Kiểu hồ sơ không được bỏ trống.">
+              <input nz-input name="type" type="text" id="type" formControlName="type">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="ngayTao" nzRequired>Ngày tạo</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Ngày tạo không được bỏ trống.">
+              <input nz-input name="ngayTao" type="text" id="ngayTao" formControlName="ngayTao">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="file" nzRequired>Chọn file</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="File không được bỏ trống.">
+              <input nz-input name="file" type="text" id="file" formControlName="file">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+      </nz-card>
+    </form>
+  </nz-card>
+</page-header-wrapper>

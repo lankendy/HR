@@ -17,9 +17,9 @@ export class ButtonSaveComponent implements OnInit {
   @Input('iconRotate') iconRotate: number = null;
 
   @Input('popConfirm') popConfirm: boolean = false;
-  @Input('confirmOkI18n') confirmOkI18n: string = "layout.confirm.save.confirm.accept";
-  @Input('confirmCancelI18n') confirmCancelI18n: string = "layout.confirm.save.confirm.cancel";
-  @Input('confirmTitleI18n') confirmTitleI18n: string = "layout.confirm.save";
+  @Input('confirmOkI18n') confirmOkI18n: string = "Đồng ý";
+  @Input('confirmCancelI18n') confirmCancelI18n: string = "Hủy bỏ";
+  @Input('confirmTitleI18n') confirmTitleI18n: string = "Bạn có chắc chắn muốn lưu bản ghi?";
   
   @Output('onClick') onClick = new EventEmitter();
   constructor() { }

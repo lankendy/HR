@@ -1,8 +1,0 @@
-<app-select [formControl]="ngControl.control" [labelHorizontal]="labelHorizontal" [name]="name" [span]="span"
-  labelContent="{{ labelContent | translate }}" placeHolder="{{placeHolder | translate }}" [disabled]="disabled"
-  [errorTip]="errorTip" [data]="listLoaiCongTrinh" [valueField]="valueField" labelField="tenLoaiCongTrinh"
-  (onSearch)="onSearchLoaiCongTrinh($event)" (onClickOpenSearch)="onClickOpenSearchLoaiCongTrinh()"
-  (onSelectChange)="handleSelectChange($event)" [getObjectValue]="getObjectValue"></app-select>
-
-<app-search-loai-cong-trinh [isVisible]="showSearchLoaiCongTrinh" (callBack)="callBackSearchLoaiCongTrinh($event)"
-  (onCancel)="onCancelSearchLoaiCongTrinh()"></app-search-loai-cong-trinh>
