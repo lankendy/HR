@@ -1,0 +1,65 @@
+  <nz-card>
+    <div nz-row [nzGutter]="8">
+      <div nz-col nzSpan="12">
+        <div nz-row>
+            <h2>Danh sách hồ sơ</h2>
+        </div>
+        <div nz-row>
+          <button nz-button nzType="default" class="btn-margin">
+            <i nz-icon nzType="reload" nzTheme="outline"></i>Tải lại</button>
+          <button nz-button nzType="primary" class="btn-margin" (click)="goToCreate()">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
+        </div>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="Tìm kiếm ..." />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+  </nz-card>    
+  <nz-card>
+    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+      <thead>
+        <tr>
+          <th
+            [nzSelections]="listOfSelection"
+            [(nzChecked)]="checked"
+            [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"
+          ></th>
+          <th>STT</th>
+          <th>Tên nhân viên</th>
+          <th>Kiểu hồ sơ</th>
+          <th>File</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of rowSelectionTable.data; let i = index">
+          <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+          <td>{{i + 1}}</td>
+          <td>{{ data.ten }}</td>
+          <td>
+            <ng-container *ngFor="let type of data.kieuHoSo">
+              <ng-container [ngSwitch]="type">
+                <ng-container *ngSwitchCase="'cv'">
+                  <i nz-icon nzType="file" nzTheme="outline"></i> CV, 
+                </ng-container>
+                <ng-container *ngSwitchCase="'hoso'">
+                  <i nz-icon nzType="folder-view" nzTheme="outline"></i> Hồ sơ
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </td>
+          <td>{{ data.file }}</td>
+          <td>
+            <i class="icon-info" style="font-size: 16px; color:#28B463 " nz-icon nz-popover nzPopoverContent="Chi tiết tài khoản" nzType="info-circle" nzTheme="outline"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>

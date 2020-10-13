@@ -1,0 +1,57 @@
+<nz-card nzBordered='false'>
+  <form nz-form [formGroup]="createForm">
+    <div nz-row>
+      <h2>Thêm mới tài khoản</h2>
+    </div>
+    <div nz-row>
+      <button nz-button nzType="primary" class="btn-margin">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
+      <button nz-button nzType="default" (click)="goToList()">
+        <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
+    </div>
+    <nz-card>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="id_nv">Tên nhân viên</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên nhân viên không được bỏ trống.">
+              <nz-select nzMode="multiple" name="id_nv" id="id_nv"
+                nzPlaceHolder="Chọn tên nhân viên" [(ngModel)]="listOfSelectedValue" formControlName="idNhanVien">
+                <nz-option *ngFor="let item of listOfOption" [nzLabel]="item" [nzValue]="item"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="email" nzRequired>Email</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Email không được bỏ trống">
+              <input nz-input name="email" type="email" id="email" formControlName="email">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="mk" nzRequired>Mật khẩu</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Mật khẩu không được bỏ trống">
+              <input nz-input name="mk" type="number" id="mk" formControlName="matKhau">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="quyen" nzRequired>Phân quyền</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Phân quyền không được bỏ trống">
+              <nz-select formControlName="phanQuyen" nzPlaceHolder="Chọn quyền" name="quyen" id="quyen">
+                <nz-option nzValue="admin" nzLabel="Admin"></nz-option>
+                <nz-option nzValue="nhanvienbanhang" nzLabel="Nhân viên bán hàng"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-card>
+  </form>
+</nz-card>

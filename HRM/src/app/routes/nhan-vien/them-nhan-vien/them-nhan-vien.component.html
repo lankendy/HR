@@ -1,0 +1,129 @@
+<nz-card nzBordered='false'>
+  <form nz-form [formGroup]="createForm">
+    <div nz-row>
+      <h2>Thêm mới nhân viên</h2>
+    </div>
+    <div nz-row>
+        <button nz-button nzType="primary" class="btn-margin" (click)="submitForm()">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
+        <button nz-button nzType="default" (click)="backList()">
+          <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
+    </div>
+    <nz-card>
+      <div nz-row>
+        <div nz-col nzSpan="18">
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzSpan="6" nzFor="ten">Tên</nz-form-label>
+                <nz-form-control nzSpan="14" nzErrorTip="Tên không được bỏ trống.">
+                  <input nz-input name="ten" type="text" id="ten" formControlName="name">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="chucvu" nzRequired>Chức vụ</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzErrorTip="Chức vụ không được bỏ trống.">
+                  <nz-select nzPlaceHolder="Chọn chức vụ" formControlName="position_id">
+                    <nz-option nzValue="00" nzLabel="Admin"></nz-option>
+                    <nz-option nzValue="01" nzLabel="Nhân viên bán hàng"></nz-option>
+                    <nz-option nzValue="02" nzLabel="Nhân viên sửa máy"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="ngaysinh" nzRequired>Ngày sinh</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzErrorTip="Ngày sinh không được bỏ trống.">
+                  <nz-date-picker style="width: 100%" formControlName="birthday" name="ngaysinh" id="ngaysinh"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="email" nzRequired>Email</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzErrorTip="Email không được bỏ trống."> 
+                  <input nz-input name="email" type="email" id="email" formControlName="email">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="sdt">Số điện thoại</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input name="sdt" type="number" id="sdt" formControlName="phone">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="gioitinh">Giới tính</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <nz-select nzPlaceHolder="Chọn giới tính" formControlName="gender" name="gioitinh">
+                    <nz-option nzValue="0" nzLabel="Nam"></nz-option>
+                    <nz-option nzValue="1" nzLabel="Nữ"></nz-option>
+                    <nz-option nzValue="2" nzLabel="Khác"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="diachi">Địa chỉ</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <textarea rows="3" nz-input name="diachi" id="diachi" formControlName="address"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="6">
+          <div nz-row>
+            <div nz-col>
+              <button nz-button nzType="primary"><i nz-icon nzType="account-book" nzTheme="outline"></i>Tạo tài khoản mặc định</button>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col>
+              <button class="m-2" nz-button nzType="default" (click)="showModal()"><i nz-icon nzType="file-add" nzTheme="outline"></i>Thêm hồ sơ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-card>
+  </form>
+</nz-card>
+
+<!-- modal -->
+<nz-modal
+[(nzVisible)]="isVisible"
+nzTitle="Thêm hồ sơ"
+(nzOnCancel)="handleCancel()"
+(nzOnOk)="handleOk()"
+[nzOkLoading]="isOkLoading"
+>
+<div nz-row>
+  <div nz-col>
+    <div nz-row>
+      <div nz-col nzSpan="8">1. CV</div>
+      <div nz-col nzSpan="16">
+        <input nz-input type="file">
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="8">2. Hồ sơ</div>
+      <div nz-col nzSpan="16">
+        <input nz-input type="file">
+      </div>
+    </div>
+  </div>
+</div>
+</nz-modal>

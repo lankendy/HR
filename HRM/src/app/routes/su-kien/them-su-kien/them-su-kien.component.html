@@ -1,0 +1,51 @@
+  <nz-card nzBordered='false'>
+    <form nz-form [formGroup]="createForm">
+      <div nz-row>
+        <h2>Thêm mới sự kiện</h2>
+      </div>
+      <div nz-row>
+        <button nz-button nzType="primary" class="btn-margin">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
+        <button nz-button nzType="default" (click)="goToList()">
+          <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
+      </div>
+      <nz-card>
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired [nzSpan]="8" nzFor="ten">Tên sự kiện</nz-form-label>
+              <nz-form-control [nzSpan]="14" nzErrorTip="Tên sự kiện không được bỏ trống.">
+                <input nz-input name="ten" type="text" id="ten" formControlName="tenSuKien">
+              </nz-form-control>
+            </nz-form-item >
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzFor="theLoai" nzRequired>Thể loại sự kiện</nz-form-label>
+              <nz-form-control [nzSpan]="14" nzErrorTip="Thể loại sự kiện không được bỏ trống.">
+                <input nz-input name="theLoai" type="text" id="theLoai" formControlName="theLoaiSuKien">
+              </nz-form-control>
+            </nz-form-item >
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzFor="sl" nzRequired>Số lượng người tham gia</nz-form-label>
+              <nz-form-control [nzSpan]="14" nzErrorTip="Số lượng người tham gia không được bỏ trống.">
+                <input nz-input name="sl" type="text" id="sl" formControlName="slNguoiThamGia">
+              </nz-form-control>
+            </nz-form-item >
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzFor="moTa">Chi tiết</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <textarea rows="3" name="moTa" id="moTa" nz-input formControlName="moTa"></textarea>
+              </nz-form-control>
+            </nz-form-item >
+          </div>
+        </div>
+      </nz-card>
+    </form>
+  </nz-card>

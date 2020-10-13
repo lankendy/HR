@@ -1,0 +1,10 @@
+.btn-margin {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.mr-2 {
+    margin-right: 10px;
+    &:hover {
+        cursor: pointer;
+    }
+}

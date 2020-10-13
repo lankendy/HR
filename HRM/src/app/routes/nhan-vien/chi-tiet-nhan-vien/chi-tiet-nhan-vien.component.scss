@@ -1,0 +1,11 @@
+.btn-margin {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.font-size-3 {
+    font-size: 30px;
+    &:hover{
+        cursor: pointer;
+    }
+}
