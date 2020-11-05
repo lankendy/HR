@@ -4,7 +4,7 @@
       <h2>Chi tiết nhân viên</h2>
     </div>
     <div nz-row>
-      <button nz-button nzType="primary" class="btn-margin">
+      <button nz-button nzType="primary" class="btn-margin" (click)="onSubmitForm()">
         <i nz-icon nzType="save" nzTheme="outline"></i>Lưu</button>
       <button nz-button nzType="default" class="btn-margin" (click)="goToEdit()">
         <i nz-icon nzType="edit" nzTheme="outline"></i>Sửa</button>
@@ -16,9 +16,19 @@
       <div nz-row>
         <div nz-col nzSpan="12">
           <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="manv">Mã nhân viên</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Mã nhân viên không được bỏ trống.">
+              <input nz-input name="manv" type="text" id="manv" formControlName="id">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
             <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Tên không được bỏ trống.">
-              <input nz-input name="ten" type="text" id="ten" formControlName="ten">
+              <input nz-input name="ten" type="text" id="ten" formControlName="name">
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -26,7 +36,9 @@
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="chucvu" nzRequired>Chức vụ</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Chức vụ không được bỏ trống.">
-              <input nz-input name="chucvu" type="text" id="chucvu" formControlName="chucVu">
+              <nz-select nzPlaceHolder="Chọn chức vụ" nzAllowClear formControlName="position_id">
+                <nz-option *ngFor="let cv of dsChucVu" [nzLabel]="cv.name" [nzValue]="cv.id"></nz-option>
+              </nz-select>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -36,15 +48,23 @@
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="ngaysinh" nzRequired>Ngày sinh</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Ngày sinh không được bỏ trống.">
-              <input nz-input name="ngaysinh" type="text" id="ngaysinh" formControlName="ngaySinh">
+              <input nz-input type="date" id="ngaysinh" formControlName="birthday"/>
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzFor="email">Email</nz-form-label>
-            <nz-form-control [nzSpan]="14">
+            <nz-form-label [nzSpan]="6" nzFor="email" nzRequired>Email</nz-form-label>
+            <nz-form-control [nzSpan]="14" [nzErrorTip]="EmailErrors">
               <input nz-input name="email" type="email" id="email" formControlName="email">
+              <ng-template #EmailErrors let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Email bắt buộc nhập.
+                </ng-container>
+                <ng-container *ngIf="control.hasError('email')">
+                  Email chưa đúng định dạng.
+                </ng-container>
+              </ng-template>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -52,9 +72,20 @@
       <div nz-row>
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzFor="sdt">Số điện thoại</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-              <input nz-input name="sdt" type="number" id="sdt" formControlName="sdt">
+            <nz-form-label [nzSpan]="6" nzFor="sdt" nzRequired>Số điện thoại</nz-form-label>
+            <nz-form-control [nzSpan]="14" [nzErrorTip]="PhoneError">
+              <input nz-input formatphone name="sdt" type="text" id="sdt" formControlName="phone">
+              <ng-template #PhoneError let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Số điện thoại bắt buộc nhập.
+                </ng-container>
+                <ng-container *ngIf="control.hasError('maxLength')">
+                  Số điện thoại có độ dài 10 kí tự.
+                </ng-container>
+                <ng-container *ngIf="control.hasError('phoneValidator')">
+                  Số điện thoại chỉ chứa số và khoảng trắng. VD: {{editForm.get('phone').errors.requiredValue}}
+                </ng-container>
+              </ng-template>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -62,7 +93,7 @@
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="diachi">Địa chỉ</nz-form-label>
             <nz-form-control [nzSpan]="14">
-              <input nz-input name="diachi" type="text" id="diachi" formControlName="diaChi">
+              <textarea rows="3" nz-input name="diachi" id="diachi" formControlName="address"></textarea>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -72,7 +103,25 @@
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="gioitinh">Giới tính</nz-form-label>
             <nz-form-control [nzSpan]="14">
-              <input nz-input name="gioitinh" type="text" id="gioitinh" formControlName="gioiTinh">
+              <nz-select formControlName="gender" [(ngModel)]="gender">
+                <nz-option *ngFor="let gender of genders" [nzLabel]="gender.name" [nzValue]="gender.value"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="luong" nzRequired>Lương</nz-form-label>
+            <nz-form-control [nzSpan]="14" [nzErrorTip]="SalaryError">
+                <input formatluong nz-input name="luong" type="text" id="luong" formControlName="salary">
+                <ng-template #SalaryError let-control>
+                  <ng-container *ngIf="control.hasError('salaryValidator')">
+                    Lương chỉ bao gồm chữ số 0-9 và ','. VD: {{editForm.get('salary').errors.requiredValue}}
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Lương bắt buộc nhập.
+                  </ng-container>
+                </ng-template>
             </nz-form-control>
           </nz-form-item>
         </div>

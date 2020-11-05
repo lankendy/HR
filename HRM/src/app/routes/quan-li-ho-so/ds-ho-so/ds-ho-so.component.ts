@@ -1,5 +1,7 @@
+import { DocumentService } from './../../../services/document/document.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-ds-ho-so',
@@ -8,53 +10,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DsHoSoComponent implements OnInit {
   isLoading = false;
-  listOfSelection = [
-    {
-      text: 'Select All Row',
-      onSelect: () => {
-        this.onAllChecked(true);
-      }
-    },
-    {
-      text: 'Select Odd Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 !== 0));
-        this.refreshCheckedStatus();
-      }
-    },
-    {
-      text: 'Select Even Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 === 0));
-        this.refreshCheckedStatus();
-      }
-    }
-  ];
   checked = false;
   indeterminate = false;
   listOfCurrentPageData = [];
   listOfData = [];
   setOfCheckedId = new Set<number>();
   constructor(
-    private router: Router
+    private router: Router,
+    private documentService: DocumentService,
+    private message: NzMessageService
   ) { }
 
   ngOnInit() {
-    this.listOfData = new Array(200).fill(0).map((_, index) => {
-      return {
-        id: index,
-        ten: `Edward King ${index}`,
-        kieuHoSo: ['cv', 'hoso'],
-        file: '1234455564',
-      };
-    });
+    this.getAllDocument();
   }
-  // handle loading-button
-  load(): void {
+
+  // call api
+  getAllDocument() {
     this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
+    this.documentService.getAllDocument().subscribe(response => {
+      if (response.code == 200) {
+        this.listOfData = response.data;
+        this.isLoading = false;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  // handle loading-button
+  reload() {
+    this.getAllDocument();
   }
 
   // handle table
@@ -87,8 +74,8 @@ export class DsHoSoComponent implements OnInit {
   }
 
   // handle navigate
-  getDetail() {
-    this.router.navigate(['ho-so/chi-tiet-ho-so'])
+  goToDetail(id: string) {
+    this.router.navigate(['ho-so/chi-tiet-ho-so', {id: id}])
   }
   goToCreate() {
     this.router.navigate(['ho-so/them-ho-so']);

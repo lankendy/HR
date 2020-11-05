@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NhanVienService } from 'src/app/services/nhan-vien/nhan-vien.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { salaryValidator} from '../../../helper/salary.validators';
+import { phoneValidator} from '../../../helper/phone.validators';
+import { phoneLength} from '../../../helper/phone-length.validators';
+import { PositionService } from 'src/app/services/position/position.service';
 
 @Component({
   selector: 'app-them-nhan-vien',
@@ -12,15 +16,20 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class ThemNhanVienComponent implements OnInit {
   createForm: FormGroup;
   id: string;
+  checkedTaoTKMD: boolean = false;
   // -- modal
   isVisible = false;
   isOkLoading = false;
   // -- end modal
+
+  dsChucVu = [];
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private nhanVienService: NhanVienService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private positionService: PositionService
   ) { }
 
   ngOnInit() {
@@ -28,12 +37,15 @@ export class ThemNhanVienComponent implements OnInit {
       name: [null, Validators.required],
       position_id: [null, Validators.required],
       birthday: [null, Validators.required],
-      email: [null],
-      phone: [null],
+      email: [null, [Validators.required, Validators.email]],
+      phone: [null, [Validators.maxLength(13), Validators.required, phoneValidator('0973 996 209')]],
       address: [null],
+      salary: [null, [salaryValidator('5,500,000')]],
       gender: [null],
-      createdBy: [null]
+      createdBy: [null],
+      createAccountAuto: [false]
     });
+    this.getAllChucVu();
   }
 
   // call api 
@@ -44,7 +56,17 @@ export class ThemNhanVienComponent implements OnInit {
           this.message.success('Thêm mới nhân viên thành công.')
         }
       });
+      this.backList();
     }
+  }
+
+  // get all chức vụ
+  getAllChucVu() {
+    this.positionService.getAllPosition().subscribe(response => {
+      if (response.code == 200) {
+        this.dsChucVu = response.data;
+      }
+    })
   }
 
   // handle navigate

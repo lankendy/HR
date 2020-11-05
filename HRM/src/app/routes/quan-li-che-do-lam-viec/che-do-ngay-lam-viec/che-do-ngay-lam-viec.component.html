@@ -1,0 +1,267 @@
+<nz-card>
+  <div>
+    <h2>Quản lí chế độ làm việc</h2>
+  </div>
+  <nz-tabset>
+    <!-- tab đăng kí nghỉ -->
+    <nz-tab nzTitle="Đăng kí nghỉ">
+      <button nz-button nzType="primary" class="btn-add" (click)="openModalNgayNghi()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
+      <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="dsLoaiNgayNghi"
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Loại nghỉ</th>
+            <th>Kí hiệu</th>
+            <th nzWidth="150px">Qui chế tiền lương</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of rowSelectionTable.data; let idx = index">
+            <td>{{idx + 1}}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.assign }}</td>
+            <td>
+              <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a person"
+                [(ngModel)]="data.payment">
+                <nz-option *ngFor="let option of dsCheDoLuongNgayNghi" [nzLabel]="option.name" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+            </td>
+            <td>
+              <i nz-icon (click)="deleteNgayNghi(data.id)" nzType="delete" nzTheme="outline" class="icon-info"
+                nz-popover nzPopoverContent="Xóa" style="font-size: 16px; color:#E74C3C; cursor: pointer; "></i>
+              <i nz-icon (click)="openModalNNToEdit(data)" nzType="edit" nzTheme="outline" style="font-size: 16px; color: #344ADB; cursor: pointer;"
+                nz-popover nzPopoverContent="Sửa"></i>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+    <!-- tab đăng kí làm -->
+    <nz-tab nzTitle="Đăng kí làm">
+      <button nz-button nzType="primary" class="btn-add" (click)="openModalNgayLam()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
+      <nz-table #dkilamTable nzShowSizeChanger [nzData]="dsLoaiNgayLam"
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Loại làm</th>
+            <th>Kí hiệu</th>
+            <th nzWidth="150px">Qui chế tiền lương</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dkilamTable.data; let idx = index">
+            <td>{{idx + 1}}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.assign }}</td>
+            <td>
+              <nz-select style="width: 150px" nzShowSearch nzAllowClear nzPlaceHolder="Chọn chế độ"
+                [(ngModel)]="data.payment">
+                <nz-option *ngFor="let option of dsCheDoLuongNgayLam" [nzLabel]="option.name" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+            </td>
+            <td>
+              <i nz-icon (click)="deleteNgayNghi(data.id)" nzType="delete" nzTheme="outline" class="icon-info" nz-popover nzPopoverContent="Xóa"
+                style="font-size: 16px; color:#E74C3C; cursor: pointer;"></i>
+              <i nz-icon (click)="openModalNLToEdit(data)" nzType="edit" nzTheme="outline" style="font-size: 16px; color: #344ADB; cursor: pointer;"
+                nz-popover nzPopoverContent="Sửa"></i>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+
+    <!-- tab quản lí chế độ lương đặc biệt -->
+    <nz-tab nzTitle="Các mức lương">
+      <div class="container">
+        <div class="table-nn">
+          <h3> Chế độ ngày nghỉ</h3>
+          <button nz-button nzType="primary" class="btn-add" (click)="openModalCDLNN() ">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
+          <nz-table #luongNN nzShowSizeChanger [nzData]="dsCheDoLuongNgayNghi"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Giá trị</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of luongNN.data; let idx = index">
+                <td>{{idx + 1}}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.value }}</td>
+                <td>
+                  <i nz-icon (click)="deleteCDLNN(data)" nzType="delete" nzTheme="outline" class="icon-info" nz-popover nzPopoverContent="Xóa"
+                    style="font-size: 16px; color:#E74C3C; cursor: pointer;"></i>
+                  <i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #344ADB; cursor: pointer;"
+                    nz-popover nzPopoverContent="Sửa"></i>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+        <div class="table-nl">
+          <h3>Chế độ ngày làm</h3>
+          <button nz-button nzType="primary" class="btn-add" (click)="openModalCDLNL()">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
+          <nz-table #luongNL nzShowSizeChanger [nzData]="dsCheDoLuongNgayLam"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Giá trị</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of luongNL.data; let idx = index">
+                <td>{{idx + 1}}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.value }}</td>
+                <td>
+                  <i nz-icon (click)="deleteCDLNL(data)" nzType="delete" nzTheme="outline" class="icon-info" nz-popover nzPopoverContent="Xóa"
+                    style="font-size: 16px; color:#E74C3C; cursor: pointer;"></i>
+                  <i nz-icon nzType="edit" nzTheme="outline" style="font-size: 16px; color: #344ADB; cursor: pointer;"
+                    nz-popover nzPopoverContent="Sửa"></i>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+
+</nz-card>
+
+<!-- modal cho thêm mới loại ngày nghỉ -->
+<nz-modal [(nzVisible)]="modalNgayNghi" nzTitle="Thêm mới loại ngày nghỉ" (nzOnCancel)="handleCancelModalNgayNghi()"
+  (nzOnOk)="handleOkModalNgayNghi()" nzFooter="nzModalFooter">
+  <form [formGroup]="formModalNN">
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Tên trường ngày nghỉ</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Tên ngày nghỉ" formControlName="name" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Kí hiệu</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Kí hiệu" formControlName="assign" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Chế độ lương</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn chế độ" formControlName="payment">
+            <nz-option *ngFor="let option of dsCheDoLuongNgayNghi" [nzLabel]="option.name" [nzValue]="option.value">
+            </nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancelModalNgayNghi()">Hủy</button>
+    <button nz-button nzType="primary" [disabled]="formModalNN.invalid" (click)="handleOkModalNgayNghi()">Lưu</button>
+  </div>
+</nz-modal>
+<!-- modal cho thêm mới loại ngày đăng kí đi làm -->
+
+<nz-modal [(nzVisible)]="modalNgayLam" nzTitle="Thêm mới loại ngày nghỉ" (nzOnCancel)="handleCancelModalNgayLam()"
+  (nzOnOk)="handleOkModalNgayLam()">
+  <form [formGroup]="formModalNL">
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Tên ngày làm</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Tên ngày làm" formControlName="name"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Kí hiệu</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Kí hiệu" formControlName="assign"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Chế độ lương</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn chế độ" formControlName="payment">
+            <nz-option *ngFor="let option of dsCheDoLuongNgayLam" [nzLabel]="option.name" [nzValue]="option.value">
+            </nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
+<!-- modal thêm mới chế độ lương ngày nghỉ -->
+
+<nz-modal [(nzVisible)]="isVisibleModalCDLNN" nzTitle="Thêm mới mức lương ngày nghỉ" (nzOnCancel)="cancelModalCDLNN()"
+  (nzOnOk)="submitModalCDLNN()">
+  <form [formGroup]="formModalCDLNN">
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Tên mức lương</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Tên mức lương" formControlName="name"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Giá trị</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Giá trị" formControlName="value"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
+<!-- modal thêm mới chê độ lương ngày làm -->
+
+<nz-modal [(nzVisible)]="isVisibleModalCDLNL" nzTitle="Thêm mới mức lương ngày làm" (nzOnCancel)="cancelModalCDLNL()"
+  (nzOnOk)="submitFormCDLNL()">
+  <form [formGroup]="formModalCDLNL">
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Tên mức lương</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Tên mức lương" formControlName="name"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="8" nzRequired>Giá trị</nz-form-label>
+      <nz-form-control nzErrorTip="Trường bắt buộc.">
+        <nz-input-group>
+          <input type="text" nz-input placeholder="Giá trị" formControlName="value"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

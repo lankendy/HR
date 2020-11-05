@@ -15,6 +15,7 @@
           <ul>
             <li nz-menu-item routerLink="/nhan-vien/danh-sach-nhan-vien" (click)="breadScrumbText = 'dsnhanvien'">Danh sách nhân viên</li>
             <li nz-menu-item routerLink="/nhan-vien/them-moi-nhan-vien" (click)="breadScrumbText = 'tmnhanvien'">Thêm mới nhân viên</li>
+            <li nz-menu-item routerLink="/nhan-vien/dang-ki-lich-lam-viec" (click)="breadScrumbText = 'dkilichlamviec'">Đăng kí lịch làm việc</li>
           </ul>
         </li>
         <li nz-submenu nzTitle="Quản lí hồ sơ" nzIcon="file-text">
@@ -27,6 +28,12 @@
           <ul>
             <li nz-menu-item routerLink="tai-khoan/danh-sach-tai-khoan" (click)="breadScrumbText = 'dstaikhoan'">Danh sách tài khoản</li>
             <li nz-menu-item routerLink="them-tai-khoan" (click)="breadScrumbText = 'tmtaikhoan'">Thêm mới tài khoản</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Quản lí chức vụ" nzIcon="lock">
+          <ul>
+            <li nz-menu-item routerLink="chuc-vu/danh-sach-chuc-vu" (click)="breadScrumbText = 'dschucvu'">Danh sách chức vụ</li>
+            <li nz-menu-item routerLink="chuc-vu/them-chuc-vu" (click)="breadScrumbText = 'tmchucvu'">Thêm mới chức vụ</li>
           </ul>
         </li>
         <li nz-submenu nzTitle="Quản lí sản phẩm" nzIcon="mobile">
@@ -45,6 +52,11 @@
           <ul>
             <li nz-menu-item routerLink="su-kien/danh-sach-su-kien" (click)="breadScrumbText = 'dssukien'">Danh sách sự kiện</li>
             <li nz-menu-item routerLink="su-kien/them-su-kien" (click)="breadScrumbText = 'tmsukien'">Thêm mới sự kiện</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Quản lí danh mục khác" nzIcon="snippets">
+          <ul>
+            <li nz-menu-item routerLink="danh-muc-khac/che-do-ngay-lam-viec" (click)="breadScrumbText = 'cdngaylamviec'">Chế độ ngày làm việc</li>
           </ul>
         </li>
       </ul>
@@ -72,6 +84,11 @@
                 <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
                 <nz-breadcrumb-item>Nhân viên</nz-breadcrumb-item>
                 <nz-breadcrumb-item> Thêm mới nhân viên</nz-breadcrumb-item>
+              </ng-container>
+              <ng-container *ngSwitchCase="'dkilichlamviec'">
+                <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Nhân viên</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Đăng kí lịch làm việc</nz-breadcrumb-item>
               </ng-container>
               <ng-container *ngSwitchCase="'dshoso'">
                 <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
@@ -122,6 +139,21 @@
                 <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
                 <nz-breadcrumb-item>Sự kiện</nz-breadcrumb-item>
                 <nz-breadcrumb-item>Thêm mới sự kiện</nz-breadcrumb-item>
+              </ng-container>
+              <ng-container *ngSwitchCase="'dschucvu'">
+                <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Chức vụ</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Danh sách chức vụ</nz-breadcrumb-item>
+              </ng-container>
+              <ng-container *ngSwitchCase="'tmchucvu'">
+                <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Chức vụ</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Thêm mới chức vụ</nz-breadcrumb-item>
+              </ng-container>
+              <ng-container *ngSwitchCase="'cdngaylamviec'">
+                <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Danh mục khác</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Chế độ ngày làm việc</nz-breadcrumb-item>
               </ng-container>
             </ng-container>
           </nz-breadcrumb>

@@ -1,18 +1,8 @@
+import { PositionService } from './../../../services/position/position.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { NhanVienService } from 'src/app/services/nhan-vien/nhan-vien.service';
-
-interface ColumnItem {
-  name: string;
-  sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn | null;
-  listOfFilter: NzTableFilterList;
-  filterFn: NzTableFilterFn | null;
-  filterMultiple: boolean;
-  sortDirections: NzTableSortOrder[];
-}
 
 interface DataItem {
   ten: string;
@@ -28,73 +18,47 @@ interface DataItem {
 })
 export class DsNhanVienComponent implements OnInit {
   isLoading = false;
-  listOfColumns: ColumnItem[] = [
-    {
-      name: 'Tên',
-      sortOrder: null,
-      sortFn: (a: DataItem, b: DataItem) => a.ten.localeCompare(b.ten),
-      sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: (list: string[], item: DataItem) => list.some(ten => item.ten.indexOf(ten) !== -1)
-    },
-    {
-      name: 'Email',
-      sortOrder: 'ascend',
-      sortFn: (a: DataItem, b: DataItem) => a.email.localeCompare(b.email),
-      sortDirections: ['descend', 'ascend'],
-      listOfFilter: [],
-      filterFn: null,
-      filterMultiple: true
-    },
-    {
-      name: 'SĐT',
-      sortOrder: 'descend',
-      sortFn: (a: DataItem, b: DataItem) => a.sdt - b.sdt,
-      sortDirections: ['descend', 'ascend'],
-      listOfFilter: [],
-      filterFn: null,
-      filterMultiple: true
-    },
-    {
-      name: 'Địa chỉ',
-      sortOrder: '',
-      sortFn: (a: DataItem, b: DataItem) => a.diaChi.localeCompare(b.diaChi),
-      sortDirections: ['descend', 'ascend'],
-      listOfFilter: [],
-      filterFn: null,
-      filterMultiple: true
-    },
-    {
-      name: 'Chức vụ',
-      sortOrder: null,
-      sortDirections: ['ascend', 'descend', null],
-      sortFn: (a: DataItem, b: DataItem) => a.chucVu.localeCompare(b.chucVu),
-      filterMultiple: false,
-      listOfFilter: [
-        { text: 'Admin', value: 'Admin' },
-        { text: 'Kế toán', value: 'ketoan' },
-        { text: 'Nhân viên', value: 'nhanvien'}
-      ],
-      filterFn: (chucVu: string, item: DataItem) => item.chucVu.indexOf(chucVu) !== -1
-    }
-  ];
   checked = false;
   indeterminate = false;
   listOfCurrentPageData = [];
   listOfData = [];
+  listOfDisplayData = [];
   setOfCheckedId = new Set<number>();
 
   idDelete: number;
   deleteCheck: boolean;
+
+  // search table
+  searchValueHoTen = '';
+  visibleHoVaTen = false;
+
+  searchValueEmail = '';
+  visibleEmail = false;
+
+  searchValueSDT = '';
+  visibleSDT = false;
+
+  searchValueDiaChi = '';
+  visibleDiaChi = false;
+
+  // filter chuc vu
+  filterChucVu = {
+    filterMultiple: true,
+    listOfFilterChucVu: [
+    ],
+    filterFnChucVu: (list: string[], item) => list.some(chucvu => item.position_id.indexOf(chucvu) !== -1)
+  }
+
   constructor(
     private router: Router,
     private nhanvienService: NhanVienService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private positionService: PositionService
   ) { }
 
-  ngOnInit() {
+ ngOnInit() {
     this.getAllUser();
+    this.getAllChucVu();
   }
 
    // call api
@@ -103,11 +67,23 @@ export class DsNhanVienComponent implements OnInit {
     this.nhanvienService.getAllUser().subscribe(res => {
       if (res.code == 200) {
         this.listOfData = res.data;
+        this.listOfDisplayData = [...this.listOfData];
         setTimeout(() => {
           this.isLoading = false;
           this.checked = false;
           this.indeterminate = false;
         }, 100);
+      }
+    })
+  }
+
+  getAllChucVu() {
+    this.positionService.getAllPosition().subscribe(response => {
+      if (response.code == 200) {
+        let arrayPosition = response.data.map(position => new Object({text: position.name, value: position.id}));
+        this.filterChucVu.listOfFilterChucVu = arrayPosition;
+      } else {
+        this.message.error("Đã xảy ra lỗi.");
       }
     })
   }
@@ -163,10 +139,61 @@ export class DsNhanVienComponent implements OnInit {
     this.nhanvienService.deleteUser(this.idDelete).subscribe(response => {
       if (response.code == 200) {
         this.message.success('Xóa thông tin nhân viên thành công.');
+        this.getAllUser();
       } else {
         this.message.error('Đã có lỗi xảy ra.');
       }
     })
+  }
+
+  deleteNhanVien(id) {
+    this.idDelete = id;
+    this.deleteUser();
+  }
+
+  // handle search table
+  searchHoTen(): void {
+    this.visibleHoVaTen = false;
+    this.listOfDisplayData = this.listOfData.filter(item => item.name.indexOf(this.searchValueHoTen) !== -1);
+  }
+
+  resetHoTen(): void {
+    this.searchValueHoTen = '';
+    this.searchHoTen();
+  }
+
+  searchEmail(): void {
+    this.visibleEmail = false;
+    this.listOfDisplayData = this.listOfData.filter(item => item.email.indexOf(this.searchValueEmail) !== -1);
+  }
+
+  resetEmail(): void {
+    this.searchValueEmail = '';
+    this.searchEmail();
+  }
+
+  searchSDT(): void {
+    this.visibleSDT = false;
+    this.listOfDisplayData = this.listOfData.filter(item => item.phone.indexOf(this.searchValueSDT) !== -1);
+  }
+
+  resetSDT(): void {
+    this.searchValueSDT = '';
+    this.searchSDT();
+  }
+
+  searchDiaChi(): void {
+    this.visibleDiaChi = false;
+    this.listOfDisplayData = this.listOfData.filter(item => item.address.indexOf(this.searchValueDiaChi) !== -1);
+  }
+
+  resetDiaChi(): void {
+    this.searchValueDiaChi = '';
+    this.searchDiaChi();
+  }
+
+  showBangLuong() {
+    this.router.navigate(['luong/bang-luong']);
   }
 
 }

@@ -15,25 +15,19 @@
           <nz-form-item>
             <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên sản phẩm</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Tên sản phẩm không được bỏ trống.">
-              <input nz-input name="ten" type="text" id="ten" formControlName="tenSP">
+              <input nz-input name="ten" type="text" id="ten" formControlName="name">
             </nz-form-control>
           </nz-form-item >
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="giaNhap" nzRequired>Giá nhập</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Giá nhập không được bỏ trống.">
-              <input nz-input name="giaNhap" type="text" id="giaNhap" formControlName="giaNhap">
+              <input nz-input name="giaNhap" type="text" id="giaNhap" formControlName="price_in">
             </nz-form-control>
           </nz-form-item >
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="giaBan" nzRequired>Giá bán</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Giá bán không được bỏ trống.">
-              <input nz-input name="giaBan" type="text" id="giaBan" formControlName="giaBan">
-            </nz-form-control>
-          </nz-form-item >
-          <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzFor="sl">Số lượng</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-              <input nz-input name="sl" type="sl" id="sl" formControlName="soLuong">
+              <input nz-input name="giaBan" type="text" id="giaBan" formControlName="price_out">
             </nz-form-control>
           </nz-form-item >
       </nz-card>

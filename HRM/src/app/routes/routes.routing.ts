@@ -12,6 +12,9 @@ const routes: Routes = [
       {path: 'san-pham', loadChildren: () => import('./quan-li-san-pham/san-pham.module').then(m => m.SanPhamModule)},
       {path: 'hoa-don', loadChildren: () => import('./hoa-don/hoa-don.module').then(m => m.HoaDonModule)},
       {path: 'su-kien', loadChildren: () => import('./su-kien/su-kien.module').then(m => m.SuKienModule)},
+      {path: 'chuc-vu', loadChildren: () => import('./chuc-vu/chuc-vu.module').then(m => m.ChucVuModule)},
+      {path: 'luong', loadChildren: () => import('./luong/luong.module').then(m => m.LuongModule)},
+      {path: 'danh-muc-khac', loadChildren: () => import('./quan-li-che-do-lam-viec/quan-li-che-do-lam-viec.module').then(m => m.QuanLiCheDoLamViecModule)},
       {path: '**', component: PageNotFoundComponent}
 ];
 

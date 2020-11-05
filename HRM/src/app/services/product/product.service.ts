@@ -15,6 +15,10 @@ export class ProductService {
     return this.http.get('http://localhost:8000/api/app/product/allProduct');
   }
 
+  getDetailProduct(id: string): Observable<any> {
+    return this.http.get('http://localhost:8000/api/app/product/getInfoProduct?id=' + id);
+  }
+
   createProduct(body: any): Observable<any> {
     return this.http.post('http://localhost:8000/api/app/product/addProduct', body);
   }

@@ -1,3 +1,4 @@
+import { UploadFileComponent } from './../../services/upload-file/upload-file/upload-file.component';
 import { CommonComponentAntModule } from './../../common/common-component-ant/common-component-ant.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,7 +16,8 @@ import { QuanLiHoSoRoutes } from './quan-li-ho-so.routing';
     declarations: [
       DsHoSoComponent,
       ChiTietHoSoComponent,
-      ThemHoSoComponent
+      ThemHoSoComponent,
+      UploadFileComponent
     ]
   })
   export class QuanLiHoSoModule { }

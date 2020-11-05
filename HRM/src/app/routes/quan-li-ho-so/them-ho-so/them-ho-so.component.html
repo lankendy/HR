@@ -4,7 +4,7 @@
         <h2>Thêm mới hồ sơ</h2>
       </div>
       <div nz-row>
-        <button nz-button nzType="primary" class="btn-margin">
+        <button nz-button nzType="primary" class="btn-margin" (click)="submitForm()">
           <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
         <button nz-button nzType="default" (click)="goToList()">
           <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
@@ -15,7 +15,9 @@
             <nz-form-item>
               <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên nhân viên</nz-form-label>
               <nz-form-control [nzSpan]="14" nzErrorTip="Tên nhân viên không được bỏ trống.">
-                <input nz-input name="ten" type="text" id="ten" formControlName="tenNhanVien">
+                <nz-select nzPlaceHolder="Chọn nhân viên" nzAllowClear nzShowSearch formControlName="user_id">
+                  <nz-option *ngFor="let cv of dsNhanVien" [nzLabel]="cv.name" [nzValue]="cv.id"></nz-option>
+                </nz-select>
               </nz-form-control>
             </nz-form-item >
           </div>
@@ -23,7 +25,11 @@
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="type" nzRequired>Kiểu hồ sơ</nz-form-label>
               <nz-form-control [nzSpan]="14" nzErrorTip="Kiểu hồ sơ không được bỏ trống.">
-                <input nz-input name="type" type="text" id="type" formControlName="type">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn loại hồ sơ" formControlName="type">
+                  <nz-option nzLabel="CV" nzValue="cv"></nz-option>
+                  <nz-option nzLabel="Hồ sơ xin việc" nzValue="hsxv"></nz-option>
+                  <nz-option nzLabel="Đơn nghỉ việc" nzValue="dnv"></nz-option>
+                </nz-select>
               </nz-form-control>
             </nz-form-item >
           </div>
@@ -31,17 +37,18 @@
         <div nz-row>
           <div nz-col nzSpan="12">
             <nz-form-item>
-              <nz-form-label [nzSpan]="6" nzFor="ngayTao" nzRequired>Ngày tạo</nz-form-label>
-              <nz-form-control [nzSpan]="14" nzErrorTip="Ngày tạo không được bỏ trống.">
-                <input nz-input name="ngayTao" type="text" id="ngayTao" formControlName="ngayTao">
+              <nz-form-label [nzSpan]="6" nzFor="file" nzRequired>Chọn file</nz-form-label>
+              <nz-form-control [nzSpan]="14" nzErrorTip="File không được bỏ trống.">
+                <!-- <input nz-input name="file" type="file" id="file" formControlName="file"> -->
+                <app-upload-file></app-upload-file>
               </nz-form-control>
             </nz-form-item >
           </div>
           <div nz-col nzSpan="12">
             <nz-form-item>
-              <nz-form-label [nzSpan]="6" nzFor="file" nzRequired>Chọn file</nz-form-label>
-              <nz-form-control [nzSpan]="14" nzErrorTip="File không được bỏ trống.">
-                <input nz-input name="file" type="text" id="file" formControlName="file">
+              <nz-form-label [nzSpan]="6" nzFor="nguoiTao" nzRequired>Người tạo</nz-form-label>
+              <nz-form-control [nzSpan]="14" nzErrorTip="Người tạo không được bỏ trống.">
+                <input nz-input name="nguoiTao" type="text" id="nguoiTao" formControlName="createdBy">
               </nz-form-control>
             </nz-form-item >
           </div>

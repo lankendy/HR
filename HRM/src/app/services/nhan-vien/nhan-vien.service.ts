@@ -15,6 +15,10 @@ export class NhanVienService {
     return this.httpClient.get('http://localhost:8000/api/app/user/allUser');
   }
 
+  getDetailUser(id: string): Observable<any> {
+    return this.httpClient.get('http://localhost:8000/api/app/user/getInfoUser?id=' + id);
+  }
+
   createUser(body: any): Observable<any> {
     return this.httpClient.post('http://localhost:8000/api/app/user/addUser', body);
   }

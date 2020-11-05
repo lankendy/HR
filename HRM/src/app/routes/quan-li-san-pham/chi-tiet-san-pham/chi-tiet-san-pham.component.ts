@@ -1,3 +1,5 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ProductService } from './../../../services/product/product.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -13,23 +15,31 @@ export class ChiTietSanPhamComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private message: NzMessageService
   ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.editForm = this.fb.group({
-      tenSP: [null, [Validators.required]],
-      giaNhap: [null, [Validators.required]],
-      giaBan: [null, [Validators.required]],
-      soLuong: [null]
+      name: [null, [Validators.required]],
+      price_in: [null, [Validators.required]],
+      price_out: [null, [Validators.required]],
     });
-    this.editForm.disable();
+    this.getDetailProduct();
   }
 
   // call api
   getDetailProduct() {
-    // note: chua co api get detail 1 product
+    this.productService.getDetailProduct(this.id).subscribe(response => {
+      if (response.code == 200) {
+        this.editForm.patchValue(response.data);
+        this.editForm.disable();
+      } else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
   }
 
   // handle navigate

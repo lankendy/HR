@@ -1,3 +1,5 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { AccountService } from './../../../services/account/account.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,46 +10,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DsTaiKhoanComponent implements OnInit {
   isLoading = false;
-  listOfSelection = [
-    {
-      text: 'Select All Row',
-      onSelect: () => {
-        this.onAllChecked(true);
-      }
-    },
-    {
-      text: 'Select Odd Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 !== 0));
-        this.refreshCheckedStatus();
-      }
-    },
-    {
-      text: 'Select Even Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 === 0));
-        this.refreshCheckedStatus();
-      }
-    }
-  ];
   checked = false;
   indeterminate = false;
   listOfCurrentPageData = [];
   listOfData = [];
   setOfCheckedId = new Set<number>();
+  idDelete: number;
   constructor(
-    private router: Router
+    private router: Router,
+    private accountService: AccountService,
+    private message: NzMessageService
   ) { }
 
   ngOnInit() {
-    this.listOfData = new Array(200).fill(0).map((_, index) => {
-      return {
-        id: index,
-        ten: `Edward King ${index}`,
-        email: `dolan${index}@gmail.com`,
-        chucNang: `Quyền: ${index}`
-      };
+    this.getAllAccount();
+  }
+
+  // call api
+  getAllAccount() {
+    this.isLoading = true;
+    this.accountService.getAllAccount().subscribe(response => {
+      if (response.code == 200) {
+        this.listOfData = response.data;
+        setTimeout(() => {
+          this.isLoading = false;
+        },100);
+      } else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
     });
+  }
+
+  reload() {
+    this.getAllAccount();
   }
 
   // handle loading-button
@@ -70,6 +65,7 @@ export class DsTaiKhoanComponent implements OnInit {
   onItemChecked(id: number, checked: boolean): void {
     this.updateCheckedSet(id, checked);
     this.refreshCheckedStatus();
+    this.idDelete = id;
   }
 
   onAllChecked(value: boolean): void {
@@ -88,12 +84,25 @@ export class DsTaiKhoanComponent implements OnInit {
   }
 
   // handle navigate
-  getDetail() {
-    this.router.navigate(['tai-khoan/chi-tiet-tai-khoan']);
+  goToDetail(id: string) {
+    this.router.navigate(['tai-khoan/chi-tiet-tai-khoan', {id: id}]);
   }
 
   goToCreate() {
     this.router.navigate(['tai-khoan/them-tai-khoan']);
+  }
+
+  // handle delete account
+  deleteAccount() {
+    this.accountService.deleteAccount(this.idDelete).subscribe(response => {
+      if (response.code == 200) {
+        this.getAllAccount();
+        this.message.success('Đã xóa.');
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
   }
 
 }

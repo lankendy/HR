@@ -1,0 +1,35 @@
+<nz-card>
+  <div style="padding-bottom: 15px;">
+    <h2>Bảng lương</h2>
+    Từ ngày: <input class="bd-input h" type="date"> Đến ngày: <input class="bd-input h" type="date">
+  </div>
+  <nz-table #basicTable [nzData]="dataBangLuong">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Mã NV</th>
+        <th>Tên NV</th>
+        <th>Chức vụ</th>
+        <th>Lương cơ bản</th>
+        <th>Lương làm thêm</th>
+        <th>Lương sản phẩm</th>
+        <th>Lương giảm</th>
+        <th>Tổng lương</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{data.codeNV}}</td>
+        <td>{{data.name}}</td>
+        <td>{{data.position}}</td>
+        <td>{{data.salaryBase}}</td>
+        <td>{{data.salaryProduct}}</td>
+        <td>{{data.salaryWorkOT}}</td>
+        <td>{{data.salarySub}}</td>
+        <td>{{data.salaryBase + data.salaryProduct + data.salaryWorkOT - data.salarySub}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <button nz-button nzType="primary" (click)="goToDetailBangLuong()">Chi tiết lương</button>
+</nz-card>

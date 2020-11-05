@@ -24,7 +24,7 @@
             <i nz-icon nzType="delete" nzTheme="outline"></i>Xóa</button>
         </div>
         <div nz-col nzSpan="12">
-          <button nz-button nzType="primary" class="btn-margin">
+          <button nz-button nzType="primary" class="btn-margin" (click)="showBangLuong()">
             <i nz-icon nzType="plus" nzTheme="outline"></i>Bảng lương</button>
         </div>
       </div>
@@ -32,35 +32,111 @@
   </div>
 </nz-card>
 <nz-card>
-  <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
-    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" [nzLoading]="isLoading">
+  <nz-table #nzTable nzShowSizeChanger [nzData]="listOfDisplayData"
+    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" [nzLoading]="isLoading" nzTableLayout="fixed">
     <thead>
       <tr>
-        <th [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-          (nzCheckedChange)="onAllChecked($event)"></th>
-        <th>STT</th>
-        <th *ngFor="let column of listOfColumns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn"
-          [nzSortDirections]="column.sortDirections" [nzFilterMultiple]="column.filterMultiple"
-          [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
-          {{ column.name }}
+        <th nzWidth="50px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
+        <th nzWidth="50px">STT</th>
+        <th nzCustomFilter>Họ và tên
+          <nz-filter-trigger [(nzVisible)]="visibleHoVaTen" [nzActive]="searchValueHoTen.length > 0"
+            [nzDropdownMenu]="HoTen">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
         </th>
+        <th nzCustomFilter>Email
+          <nz-filter-trigger [(nzVisible)]="visibleEmail" [nzActive]="searchValueEmail.length > 0"
+            [nzDropdownMenu]="Email">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzWidth="100px">Lương</th>
+        <th nzCustomFilter nzWidth="100px">SĐT
+          <nz-filter-trigger [(nzVisible)]="visibleSDT" [nzActive]="searchValueSDT.length > 0" [nzDropdownMenu]="SDT">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzCustomFilter>Địa chỉ
+          <nz-filter-trigger [(nzVisible)]="visibleDiaChi" [nzActive]="searchValueDiaChi.length > 0"
+            [nzDropdownMenu]="DiaChi">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th [nzFilters]="filterChucVu.listOfFilterChucVu"
+          [nzFilterMultiple]="filterChucVu.filterMultiple">Chức vụ</th>
         <th>Thao tác</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of rowSelectionTable.data; let i = index">
+      <tr *ngFor="let data of nzTable.data; let i = index">
         <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
         <td>{{i + 1}}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.email }}</td>
+        <td>{{ data.salary}}</td>
         <td>{{ data.phone }}</td>
         <td>{{ data.address}}</td>
-        <td>{{ data.position_id}}</td>
+        <td>{{ data.position.name}}</td>
         <td>
-          <i (click)="getDetail(data)" class="icon-info" style="font-size: 16px; color:#28B463 " nz-icon nz-popover
+          <i (click)="getDetail(data)" class="icon-info" style="font-size: 16px; color:#28B463; margin-right: 10px; " nz-icon nz-popover
             nzPopoverContent="Chi tiết nhân viên" nzType="info-circle" nzTheme="outline"></i>
+          <i (click)="deleteNhanVien(data.id)" nz-icon nzType="delete" nzTheme="outline" class="icon-info" nz-popover
+          nzPopoverContent="Xóa nhân viên" style="font-size: 16px; color:#E74C3C "></i>
         </td>
       </tr>
     </tbody>
   </nz-table>
 </nz-card>
+
+<!-- filter table -->
+<nz-dropdown-menu #HoTen="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValueHoTen"
+        [ngModelOptions]="{standalone: true}" />
+      <button nz-button nzType="primary" (click)="searchHoTen()" class="search-button">
+        Search
+      </button>
+      <button nz-button (click)="resetHoTen()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #Email="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search email" [(ngModel)]="searchValueEmail"
+        [ngModelOptions]="{standalone: true}" />
+      <button nz-button nzType="primary" (click)="searchEmail()" class="search-button">
+        Search
+      </button>
+      <button nz-button (click)="resetEmail()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #SDT="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search sđt" [(ngModel)]="searchValueSDT"
+        [ngModelOptions]="{standalone: true}" />
+      <button nz-button nzType="primary" (click)="searchSDT()" class="search-button">
+        Search
+      </button>
+      <button nz-button (click)="resetSDT()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #DiaChi="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search địa chỉ" [(ngModel)]="searchValueDiaChi"
+        [ngModelOptions]="{standalone: true}" />
+      <button nz-button nzType="primary" (click)="searchDiaChi()" class="search-button">
+        Search
+      </button>
+      <button nz-button (click)="resetDiaChi()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
