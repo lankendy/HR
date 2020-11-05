@@ -1,0 +1,51 @@
+<nz-card>
+  <div class="header">
+    <h2>Chi tiết bảng lương</h2>
+    Từ ngày: <input type="date" value="startDate"> Đến ngày: <input type="date" value="endDate">
+  </div>
+  <div class="wap-table">
+    <nz-table #table [nzData]="dataFakeDetailBangLuong">
+      <thead>
+        <tr>
+          <th rowspan="2">STT</th>
+          <th rowspan="2">Mã NV</th>
+          <th rowspan="2">Tên NV</th>
+          <th colspan="3" style="padding: 15px">Lịch làm thêm</th>
+          <th colspan="3">Lịch nghỉ</th>
+          <th colspan="5">Thưởng SP</th>
+        </tr>
+        <tr>
+          <td>(I)</td>
+          <td>(II)</td>
+          <td>(III)</td>
+          <td>(N<sub>I</sub>)</td>
+          <td>(N<sub>II</sub>)</td>
+          <td>(N<sub>III</sub>)</td>
+          <td>(SP<sub>I</sub>)</td>
+          <td>(SP<sub>II</sub>)</td>
+          <td>(SP<sub>III</sub>)</td>
+          <td>(SP<sub>IV</sub>)</td>
+          <td>(SP<sub>V</sub>)</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{data.code}}</td>
+          <td>{{data.name}}</td>
+          <td>{{data.lichLamThem[0]}}</td>
+          <td>{{data.lichLamThem[1]}}</td>
+          <td>{{data.lichLamThem[2]}}</td>
+          <td>{{data.lichNghi[0]}}</td>
+          <td>{{data.lichNghi[1]}}</td>
+          <td>{{data.lichNghi[2]}}</td>
+          <td>{{data.thuongSP[0]}}</td>
+          <td>{{data.thuongSP[1]}}</td>
+          <td>{{data.thuongSP[2]}}</td>
+          <td>{{data.thuongSP[3]}}</td>
+          <td>{{data.thuongSP[4]}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-card>

@@ -1,0 +1,183 @@
+<nz-card nzBordered='false'>
+  <form nz-form [formGroup]="editForm">
+    <div nz-row>
+      <h2>Chi tiết nhân viên</h2>
+    </div>
+    <div nz-row>
+      <button nz-button nzType="primary" class="btn-margin" (click)="onSubmitForm()">
+        <i nz-icon nzType="save" nzTheme="outline"></i>Lưu</button>
+      <button nz-button nzType="default" class="btn-margin" (click)="goToEdit()">
+        <i nz-icon nzType="edit" nzTheme="outline"></i>Sửa</button>
+      <button nz-button nzType="default" (click)="backList()">
+        <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
+    </div>
+    <nz-card>
+      <nz-divider nzText="Thông tin nhân viên" nzOrientation="left"></nz-divider>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="manv">Mã nhân viên</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Mã nhân viên không được bỏ trống.">
+              <input nz-input name="manv" type="text" id="manv" formControlName="id">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên không được bỏ trống.">
+              <input nz-input name="ten" type="text" id="ten" formControlName="name">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="chucvu" nzRequired>Chức vụ</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Chức vụ không được bỏ trống.">
+              <nz-select nzPlaceHolder="Chọn chức vụ" nzAllowClear formControlName="position_id">
+                <nz-option *ngFor="let cv of dsChucVu" [nzLabel]="cv.name" [nzValue]="cv.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="ngaysinh" nzRequired>Ngày sinh</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Ngày sinh không được bỏ trống.">
+              <input nz-input type="date" id="ngaysinh" formControlName="birthday"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="email" nzRequired>Email</nz-form-label>
+            <nz-form-control [nzSpan]="14" [nzErrorTip]="EmailErrors">
+              <input nz-input name="email" type="email" id="email" formControlName="email">
+              <ng-template #EmailErrors let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Email bắt buộc nhập.
+                </ng-container>
+                <ng-container *ngIf="control.hasError('email')">
+                  Email chưa đúng định dạng.
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="sdt" nzRequired>Số điện thoại</nz-form-label>
+            <nz-form-control [nzSpan]="14" [nzErrorTip]="PhoneError">
+              <input nz-input formatphone name="sdt" type="text" id="sdt" formControlName="phone">
+              <ng-template #PhoneError let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Số điện thoại bắt buộc nhập.
+                </ng-container>
+                <ng-container *ngIf="control.hasError('maxLength')">
+                  Số điện thoại có độ dài 10 kí tự.
+                </ng-container>
+                <ng-container *ngIf="control.hasError('phoneValidator')">
+                  Số điện thoại chỉ chứa số và khoảng trắng. VD: {{editForm.get('phone').errors.requiredValue}}
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="diachi">Địa chỉ</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <textarea rows="3" nz-input name="diachi" id="diachi" formControlName="address"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="gioitinh">Giới tính</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <nz-select formControlName="gender" [(ngModel)]="gender">
+                <nz-option *ngFor="let gender of genders" [nzLabel]="gender.name" [nzValue]="gender.value"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="luong" nzRequired>Lương</nz-form-label>
+            <nz-form-control [nzSpan]="14" [nzErrorTip]="SalaryError">
+                <input formatluong nz-input name="luong" type="text" id="luong" formControlName="salary">
+                <ng-template #SalaryError let-control>
+                  <ng-container *ngIf="control.hasError('salaryValidator')">
+                    Lương chỉ bao gồm chữ số 0-9 và ','. VD: {{editForm.get('salary').errors.requiredValue}}
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Lương bắt buộc nhập.
+                  </ng-container>
+                </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <nz-divider nzText="Danh sách hồ sơ" nzOrientation="left"></nz-divider>
+        <div nz-col nzSpan="24">
+          <nz-list nzGrid>
+            <div nz-row [nzGutter]="16">
+              <div nz-col [nzSpan]="6">
+                <nz-list-item>
+                  <nz-card nzTitle="CV">
+                    <i (click)="showModalCV()" class="font-size-3" style="color: #2471A3" nz-icon nzType="file-pdf" nzTheme="outline"></i>File CV
+                  </nz-card>
+                </nz-list-item>
+              </div>
+              <div nz-col [nzSpan]="6">
+                <nz-list-item>
+                  <nz-card nzTitle="Bảo hiểm">
+                    <i (click)="showModalBH()" class="font-size-3" style="color: #F39C12" nz-icon nzType="file-pdf" nzTheme="outline"></i>File Bảo hiểm
+                  </nz-card>
+                </nz-list-item>
+              </div>
+              <div nz-col [nzSpan]="6">
+                <nz-list-item>
+                  <nz-card nzTitle="Hồ sơ xin việc">
+                    <i (click)="showModalXV()" class="font-size-3" style="color: #943126;" nz-icon nzType="file-pdf" nzTheme="outline"></i>File xin việc
+                  </nz-card>
+                </nz-list-item>
+              </div>
+              <div nz-col [nzSpan]="6">
+                <nz-list-item>
+                  <nz-card nzTitle="Đơn xin nghỉ việc">
+                    <i class="font-size-3" style="color: #7FB3D5 " nz-icon nzType="file-pdf" nzTheme="outline"></i>Đơn xin nghỉ việc
+                  </nz-card>
+                </nz-list-item>
+              </div>
+            </div>
+          </nz-list>
+        </div>
+      </div>
+    </nz-card>
+  </form>
+</nz-card>
+
+<!-- CV -->
+<nz-modal [(nzVisible)]="isVisibleCV" nzTitle="CV" (nzOnCancel)="handleCancelCV()" (nzOnOk)="handleOkCV()">
+  <p>Content CV file</p>
+</nz-modal>
+
+<!-- Bảo hiểm -->
+<nz-modal [(nzVisible)]="isVisibleBH" nzTitle="Bảo hiểm" (nzOnCancel)="handleCanCelBH()" (nzOnOk)="handleOKBH()">
+  <p>Content BH file</p>
+</nz-modal>
+
+<!-- Xin việc -->
+<nz-modal [(nzVisible)]="isVisibleXV" nzTitle="Đơn xin việc" (nzOnCancel)="handleCancelXV()" (nzOnOk)="handleOKXV()">
+  <p>Content xin việc</p>
+</nz-modal>

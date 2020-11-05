@@ -1,0 +1,52 @@
+.bd-input {
+    border: 1px solid #ccc;
+}
+
+span.require {
+    color: red;
+}
+.margin-bottom {
+    margin-bottom: 15px;
+}
+
+form {
+    label {
+        margin-right: 20px;
+        font-weight: bold;
+        font-style: italic;
+    }
+    .input {
+        border: 1px solid #ccc;
+        width: 100%;
+        height: 30px;
+    }
+    .input-textarea {
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+    .flex-container {
+        display: flex;
+        padding: 5px;
+        .flex-item1 {
+            flex-basis: 170px;
+        }
+        .flex-item2 {
+            width: 100%;
+        }
+    }
+
+    .f-column {
+        flex-direction: column;
+    }
+}
+.mr {
+    margin-right: 10px;
+}
+
+.input {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 30px;
+    margin-left: 5px;
+}
+

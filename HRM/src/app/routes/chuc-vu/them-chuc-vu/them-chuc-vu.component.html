@@ -1,0 +1,26 @@
+<nz-card nzBordered='false'>
+  <form nz-form [formGroup]="createForm">
+    <div nz-row>
+      <h2>Thêm mới chức vụ</h2>
+    </div>
+    <div nz-row>
+      <button nz-button nzType="primary" class="btn-margin" (click)="submitForm()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
+      <button nz-button nzType="default" (click)="goToList()">
+        <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
+    </div>
+    <nz-card>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên chức vụ</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tên chức vụ không được bỏ trống.">
+              <input nz-input name="ten" type="text" id="ten" formControlName="chucVuName">
+            </nz-form-control>
+          </nz-form-item >
+        </div>
+      </div>
+    </nz-card>
+  </form>
+</nz-card>
+

@@ -1,6 +1,0 @@
-{
-    "/api": {
-        "target": "https://gstnn-gp.monre.gov.vn:8085",
-        "secure": false
-    }
-}
