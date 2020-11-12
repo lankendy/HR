@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-bang-luong',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bang-luong.component.scss']
 })
 export class BangLuongComponent implements OnInit {
+  startDate: string;
+  lastDate: string;
   dataBangLuong = [
     {
       codeNV: 'NV001',
@@ -74,10 +77,21 @@ export class BangLuongComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.setDate();
   }
 
+  setDate() {
+    const date = new Date();
+    let start = new Date(date.getFullYear(), date.getMonth(), 1);
+    let last = new Date(date.getFullYear(), date.getMonth(), 0);
+
+    this.startDate = new DatePipe('en-US').transform(start, 'yyyy-MM-dd');
+    this.lastDate = new DatePipe('en-US').transform(last, 'yyyy-MM-dd');
+  }
+
+
   goToDetailBangLuong() {
-    this.router.navigate(['/luong/chi-tiet-bang-luong']);
+    this.router.navigate(['dashboard/luong/chi-tiet-bang-luong']);
   }
 
 }

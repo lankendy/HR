@@ -15,6 +15,8 @@ export class BillService {
     return this.http.get('http://localhost:8000/api/app/bill/allBill');
   }
 
-  
+  addBill(body: any): Observable<any> {
+    return this.http.post('http://localhost:8000/api/app/bill/addBill', body);
+  }
 
 }

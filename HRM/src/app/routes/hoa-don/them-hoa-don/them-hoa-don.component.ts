@@ -1,3 +1,4 @@
+import { BillService } from './../../../services/bill/bill.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +21,8 @@ export class ThemHoaDonComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private message: NzMessageService,
-    private nhanVienService: NhanVienService
+    private nhanVienService: NhanVienService,
+    private billService: BillService
   ) { }
 
   ngOnInit() {
@@ -97,6 +99,14 @@ export class ThemHoaDonComponent implements OnInit {
 
   submitForm() {
     console.log(this.createForm.value);
+    this.billService.addBill(this.createForm.value).subscribe(res =>{
+      if (res.code == 200) {
+        this.message.success('Thêm mới thành công.')
+      }
+      else {
+        this.message.error('Có lỗi xảy ra.')
+      }
+    })
   }
 
 

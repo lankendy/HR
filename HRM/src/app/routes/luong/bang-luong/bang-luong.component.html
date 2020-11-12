@@ -1,7 +1,7 @@
 <nz-card>
   <div style="padding-bottom: 15px;">
     <h2>Bảng lương</h2>
-    Từ ngày: <input class="bd-input h" type="date"> Đến ngày: <input class="bd-input h" type="date">
+    Từ ngày: <input class="bd-input h" type="date" [(ngModel)]="startDate"> Đến ngày: <input class="bd-input h" type="date" [(ngModel)]="lastDate">
   </div>
   <nz-table #basicTable [nzData]="dataBangLuong">
     <thead>
