@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { RoutesModule } from './routes/routes.module';
 import { AppRoutingModule } from './app-routing.module';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -21,11 +20,10 @@ registerLocaleData(en);
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    RoutesModule,
     AppRoutingModule,
     IconsProviderModule,
     NzLayoutModule,

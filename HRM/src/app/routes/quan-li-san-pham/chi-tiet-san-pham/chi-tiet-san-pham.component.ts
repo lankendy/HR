@@ -12,6 +12,13 @@ import { Component, OnInit } from '@angular/core';
 export class ChiTietSanPhamComponent implements OnInit {
   editForm: FormGroup;
   id: string;
+  product_type: string;
+  dsLoaiSP = [
+    {id: 0, name: 'SP Loại 1'},
+    {id: 1, name: 'SP Loại 2'},
+    {id: 2, name: 'SP Loại 3'},
+    {id: 3, name: 'SP Loại 4'}
+  ]
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -26,6 +33,7 @@ export class ChiTietSanPhamComponent implements OnInit {
       name: [null, [Validators.required]],
       price_in: [null, [Validators.required]],
       price_out: [null, [Validators.required]],
+      product_type: [null, Validators.required]
     });
     this.getDetailProduct();
   }
@@ -35,6 +43,7 @@ export class ChiTietSanPhamComponent implements OnInit {
     this.productService.getDetailProduct(this.id).subscribe(response => {
       if (response.code == 200) {
         this.editForm.patchValue(response.data);
+        this.product_type = String(response.data.product_type);
         this.editForm.disable();
       } else {
         this.message.error('Đã có lỗi xảy ra.');
@@ -42,9 +51,22 @@ export class ChiTietSanPhamComponent implements OnInit {
     })
   }
 
+  submitForm() {
+    if (this.editForm.valid) {
+      this.productService.editProduct({...this.editForm.value, id: this.id}).subscribe(response => {
+        if (response.code == 200) {
+          this.message.success('Đã chỉnh sửa sản phẩm thành công.');
+        }
+        else {
+          this.message.error('Đã có lỗi xảy ra.');
+        }
+      })
+    }
+  }
+
   // handle navigate
   goToList() {
-    this.router.navigate(['san-pham/danh-sach-san-pham']);
+    this.router.navigate(['dashboard/san-pham/danh-sach-san-pham']);
   }
 
   goToEdit() {

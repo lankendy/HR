@@ -18,6 +18,7 @@ interface DataItem {
 })
 export class DsNhanVienComponent implements OnInit {
   isLoading = false;
+  keyword = '';
   checked = false;
   indeterminate = false;
   listOfCurrentPageData = [];
@@ -127,11 +128,11 @@ export class DsNhanVienComponent implements OnInit {
 
   // handle navigate
   getDetail(nv) {
-    this.router.navigate(['nhan-vien/chi-tiet-nhan-vien', {id: nv.id}]);
+    this.router.navigate(['dashboard/nhan-vien/chi-tiet-nhan-vien', {id: nv.id}]);
   }
 
   goToCreate() {
-    this.router.navigate(['nhan-vien/them-moi-nhan-vien'])
+    this.router.navigate(['dashboard/nhan-vien/them-moi-nhan-vien'])
   }
 
   // handle delete btn
@@ -145,6 +146,7 @@ export class DsNhanVienComponent implements OnInit {
       }
     })
   }
+
 
   deleteNhanVien(id) {
     this.idDelete = id;
@@ -193,7 +195,18 @@ export class DsNhanVienComponent implements OnInit {
   }
 
   showBangLuong() {
-    this.router.navigate(['luong/bang-luong']);
+    this.router.navigate(['dashboard/luong/bang-luong']);
+  }
+
+  searchAll() {
+      this.nhanvienService.searchAll(this.keyword).subscribe(res => {
+        if (res.code == 200) {
+          this.listOfDisplayData = res.data.allData;
+        }
+        else {
+          this.message.error('Đã có lỗi xảy ra.');
+        }
+      })
   }
 
 }

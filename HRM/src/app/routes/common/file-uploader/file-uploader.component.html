@@ -1,0 +1,5 @@
+<form [formGroup] = "formGroup">
+ <input type="file" multiple (change)="selectImage($event)" />
+ <br/>
+ <button type="submit" (click)="onSubmit()">Upload</button>
+</form>

@@ -11,6 +11,10 @@ export class AccountService {
     private httpClient: HttpClient
   ) { }
 
+  login(email, password): Observable<any> {
+    return this.httpClient.get(`http://localhost:8000/api/app/account/login?account=${email}&password=${password}`);
+  }
+
   getAllAccount(): Observable<any> {
     return this.httpClient.get('http://localhost:8000/api/app/account/allAccount');
   }

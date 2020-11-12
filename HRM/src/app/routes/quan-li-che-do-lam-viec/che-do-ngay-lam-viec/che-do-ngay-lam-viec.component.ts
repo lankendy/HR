@@ -77,7 +77,6 @@ export class CheDoNgayLamViecComponent implements OnInit {
 
   initialFormModalCDLNN() {
     this.formModalCDLNN = this.fb.group({
-      id: [null],
       name: [null, [Validators.required]],
       value: [null, [Validators.required]],
       type: [2]
@@ -86,7 +85,6 @@ export class CheDoNgayLamViecComponent implements OnInit {
 
   initialFormModalCDLNL() {
     this.formModalCDLNL = this.fb.group({
-      id: [null],
       name: [null, [Validators.required]],
       value: [null, [Validators.required]],
       type: [1]
@@ -312,11 +310,11 @@ export class CheDoNgayLamViecComponent implements OnInit {
         if (res.code == 200) {
           this.message.success('Thêm mới thành công.');
           this.getAllCDLuongNgayNghi();
-          this.formModalCDLNN.reset();
+          this.initialFormModalCDLNN();
           this.cancelModalCDLNN();
         }
         else {
-          this.message.error('Đã có lỗi xảy ra.');
+          this.message.error(res.message);
         }
       })
     } else {
@@ -351,11 +349,11 @@ export class CheDoNgayLamViecComponent implements OnInit {
         if (res.code == 200) {
           this.message.success('Thêm mới thành công.');
           this.getAllCDLuongNgayLam();
-          this.formModalCDLNL.reset();
+          this.initialFormModalCDLNL();
           this.cancelModalCDLNL();
         }
         else {
-          this.message.error('Đã có lỗi xảy ra.');
+          this.message.error(res.message);
         }
       })
     } else {

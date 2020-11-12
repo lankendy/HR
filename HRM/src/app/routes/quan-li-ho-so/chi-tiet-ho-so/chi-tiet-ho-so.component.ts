@@ -60,7 +60,7 @@ export class ChiTietHoSoComponent implements OnInit {
 
   // handle navigate
   goToList() {
-    this.router.navigate(['ho-so/danh-sach-ho-so']);
+    this.router.navigate(['dashboard/ho-so/danh-sach-ho-so']);
   }
 
   goToEdit() {

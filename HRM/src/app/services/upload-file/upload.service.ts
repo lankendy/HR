@@ -1,31 +1,35 @@
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 
-const url = 'http://localhost:8000/upload'
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private  BASE_URL: string = "http://localhost:8000";
-  constructor(private httpClient: HttpClient) { }
-  
-  upload(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
+  private fileList: string[] = new Array<string>();
+  private fileList$: Subject<string[]> = new Subject<string[]>();
+  constructor() { }
 
-    const req = new HttpRequest('POST',`${this.BASE_URL}/upload`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
-
-
-    return this.httpClient.request(req);
+  public upload(fileName: string, fileContent: string) {
+    this.fileList.push(fileName);
+    this.fileList$.next(this.fileList);
   }
 
-  getFile(): Observable<any> {
-    return this.httpClient.get(`${this.BASE_URL}/files`);
-  }
-  
+  public download(fileName: string): void {
 
+  }
+
+  remove(fileName): void {
+    this.fileList.splice(this.fileList.findIndex(name => name === fileName), 1);
+    this.fileList$.next(this.fileList);
+  }
+
+  public list(): Observable<string[]>{
+    return this.fileList$;
+  }
+
+  private addFileToList(fileName: string): void {
+    this.fileList.push(fileName);
+    this.fileList$.next(this.fileList);
+  }
 }

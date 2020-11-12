@@ -7,7 +7,7 @@
         </div>
         <div nz-col nzSpan="12">
           <nz-input-group [nzSuffix]="suffixIconSearch">
-            <input type="text" nz-input placeholder="Tìm kiếm ..." />
+            <input nz-input placeholder="Tìm kiếm ..."  [(ngModel)]="keyword" (ngModelChange)="searchAll()"/>
           </nz-input-group>
           <ng-template #suffixIconSearch>
             <i nz-icon nzType="search"></i>

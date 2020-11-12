@@ -19,15 +19,23 @@
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="giaNhap" nzRequired>Giá nhập</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Giá nhập không được bỏ trống.">
-              <input nz-input name="giaNhap" type="number" id="giaNhap" formControlName="price_in">
+              <input formatluong nz-input name="giaNhap" type="number" id="giaNhap" formControlName="price_in" placeholder="VNĐ">
             </nz-form-control>
           </nz-form-item >
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="giaBan" nzRequired>Giá bán</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Giá bán không được bỏ trống.">
-              <input nz-input name="giaBan" type="number" id="giaBan" formControlName="price_out">
+              <input formatluong nz-input name="giaBan" type="number" id="giaBan" formControlName="price_out" placeholder="VNĐ">
             </nz-form-control>
           </nz-form-item >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="loaiSP" nzRequired>Loại SP</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Loại sản phẩm không được bỏ trống.">
+              <nz-select class="input-sp" nzPlaceHolder="Chọn loại sản phẩm" nzAllowClear formControlName="loaiSP">
+                <nz-option *ngFor="let sp of dsLoaiSP" [nzLabel]="sp.name" [nzValue]="sp.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
       </nz-card>
     </form>
   </nz-card>

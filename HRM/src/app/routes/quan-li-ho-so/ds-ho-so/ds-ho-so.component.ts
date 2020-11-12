@@ -75,9 +75,9 @@ export class DsHoSoComponent implements OnInit {
 
   // handle navigate
   goToDetail(id: string) {
-    this.router.navigate(['ho-so/chi-tiet-ho-so', {id: id}])
+    this.router.navigate(['dashboard/ho-so/chi-tiet-ho-so', {id: id}])
   }
   goToCreate() {
-    this.router.navigate(['ho-so/them-ho-so']);
+    this.router.navigate(['dashboard/ho-so/them-ho-so']);
   }
 }

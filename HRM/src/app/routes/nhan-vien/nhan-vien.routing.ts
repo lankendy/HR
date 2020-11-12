@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: 'chi-tiet-nhan-vien', component: ChiTietNhanVienComponent },
   { path: 'them-moi-nhan-vien', component: ThemNhanVienComponent },
   { path: 'dang-ki-lich-lam-viec', component: DangKiLichLamViecComponent},
-  { path: '',   redirectTo: '/danh-sach-nhan-vien', pathMatch: 'full' }
 ];
 
 export const NhanVienRoutes = RouterModule.forChild(routes);

@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { CommonComponentAntModule } from './../../common/common-component-ant/common-component-ant.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -8,7 +9,7 @@ import { HoaDonRoutes } from './hoa-don.routing';
 
 @NgModule({
     imports: [
-        CommonModule, HoaDonRoutes, CommonComponentAntModule
+        CommonModule, HoaDonRoutes, CommonComponentAntModule, FormsModule
     ],
     declarations: [
         DanhSachHoaDonComponent,
