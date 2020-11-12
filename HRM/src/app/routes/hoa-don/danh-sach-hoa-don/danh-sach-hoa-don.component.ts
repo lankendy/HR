@@ -1,5 +1,7 @@
+import { BillService } from './../../../services/bill/bill.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-danh-sach-hoa-don',
@@ -35,8 +37,13 @@ export class DanhSachHoaDonComponent implements OnInit {
   listOfCurrentPageData = [];
   listOfData = [];
   setOfCheckedId = new Set<number>();
+
+  // 
+  dsBill = [];
   constructor(
-    private router: Router
+    private router: Router,
+    private billService: BillService,
+    private message: NzMessageService
   ) { }
 
   ngOnInit() {
@@ -49,6 +56,21 @@ export class DanhSachHoaDonComponent implements OnInit {
         tongTien: `1500${index}`
       };
     });
+
+    this.getAllBill();
+  }
+
+  // call api 
+  getAllBill() {
+    this.billService.getAllBill().subscribe(res => {
+      if (res.code == 200) {
+        this.dsBill = res.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+    
   }
 
   // handle loading-button
@@ -90,11 +112,11 @@ export class DanhSachHoaDonComponent implements OnInit {
 
   // handle navigate
   getDetail() {
-    this.router.navigate(['hoa-don/chi-tiet-hoa-don'])
+    this.router.navigate(['dashboard/hoa-don/chi-tiet-hoa-don'])
   }
 
   goToCreate() {
-    this.router.navigate(['hoa-don/them-hoa-don'])
+    this.router.navigate(['dashboard/hoa-don/them-hoa-don'])
   }
 
 

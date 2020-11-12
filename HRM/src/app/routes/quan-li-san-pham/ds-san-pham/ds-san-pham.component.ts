@@ -79,11 +79,11 @@ export class DsSanPhamComponent implements OnInit {
 
   // handle navigate
   getDetail(product: any){
-    this.router.navigate(['san-pham/chi-tiet-san-pham', {id: product.id}]);
+    this.router.navigate(['dashboard/san-pham/chi-tiet-san-pham', {id: product.id}]);
   }
 
   goToCreate() {
-    this.router.navigate(['san-pham/them-san-pham']);
+    this.router.navigate(['dashboard/san-pham/them-san-pham']);
   }
 
   // handle event button delete

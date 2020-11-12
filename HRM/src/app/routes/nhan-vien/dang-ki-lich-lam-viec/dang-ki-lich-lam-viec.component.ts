@@ -86,6 +86,7 @@ export class DangKiLichLamViecComponent implements OnInit {
   }
 
   handleOkModal() {
+    // fix cứng chưa có api
     this.isVisibleModalDKLV = false;
     let indexNhanvien = this.listNhanVien.findIndex(nv => nv.id == this.formModal.value.idNhanVien);
 
@@ -94,11 +95,10 @@ export class DangKiLichLamViecComponent implements OnInit {
       name: String(this.listNhanVien[indexNhanvien].name),
       loai: Number(this.formModal.value.loai),
       ghiChu: String(this.formModal.value.ghichu),
-      ngayDangKi: String(this.formModal.value.ngaydangki.at(0)),
+      ngayDangKi: String(this.formModal.get('ngaydangki')[0]),
       status: 0
     }
     this.listOfDisplayData.push(object);
-    console.log('asf', this.listOfDisplayData)
   }
 
   handleCancelModal() {
@@ -143,7 +143,6 @@ export class DangKiLichLamViecComponent implements OnInit {
 
   // validator
   pheDuyetDangKi(index) {
-    console.log(this.listOfDisplayData[index].status);
     if (this.listOfDisplayData[index].status == 0) {
       this.listOfDisplayData[index].status = 1;
     }
@@ -168,6 +167,5 @@ export class DangKiLichLamViecComponent implements OnInit {
 
   changeDate(event) {
     console.log(event, typeof event);
-    
   }
 }

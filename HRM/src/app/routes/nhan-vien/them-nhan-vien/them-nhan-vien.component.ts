@@ -5,7 +5,6 @@ import { NhanVienService } from 'src/app/services/nhan-vien/nhan-vien.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { salaryValidator} from '../../../helper/salary.validators';
 import { phoneValidator} from '../../../helper/phone.validators';
-import { phoneLength} from '../../../helper/phone-length.validators';
 import { PositionService } from 'src/app/services/position/position.service';
 
 @Component({
@@ -71,7 +70,7 @@ export class ThemNhanVienComponent implements OnInit {
 
   // handle navigate
   backList() {
-    this.router.navigate(['nhan-vien/danh-sach-nhan-vien'])
+    this.router.navigate(['dashboard/nhan-vien/danh-sach-nhan-vien'])
   }
   // --end handle navigate
 

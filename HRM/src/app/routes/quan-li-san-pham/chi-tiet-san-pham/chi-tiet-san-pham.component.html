@@ -4,7 +4,7 @@
         <h2>Chi tiết sản phẩm</h2>
       </div>
       <div nz-row>
-        <button nz-button nzType="primary" class="btn-margin">
+        <button nz-button nzType="primary" class="btn-margin" (click)="submitForm()">
           <i nz-icon nzType="save" nzTheme="outline"></i>Lưu</button>
         <button nz-button nzType="default" class="btn-margin" (click)="goToEdit()">
           <i nz-icon nzType="edit" nzTheme="outline"></i>Sửa</button>
@@ -28,6 +28,14 @@
             <nz-form-label [nzSpan]="6" nzFor="giaBan" nzRequired>Giá bán</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Giá bán không được bỏ trống.">
               <input nz-input name="giaBan" type="text" id="giaBan" formControlName="price_out">
+            </nz-form-control>
+          </nz-form-item >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="loaiSP" nzRequired>Loại sản phẩm</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Loại sản phẩm không được bỏ trống.">
+              <nz-select class="input-sp" nzPlaceHolder="Chọn loại sản phẩm" nzAllowClear formControlName="product_type">
+                <nz-option *ngFor="let sp of dsLoaiSP" [nzLabel]="sp.name" [nzValue]="sp.id"></nz-option>
+              </nz-select>
             </nz-form-control>
           </nz-form-item >
       </nz-card>

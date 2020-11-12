@@ -31,4 +31,8 @@ export class NhanVienService {
     return this.httpClient.post('http://localhost:8000/api/app/user/deleteUser', {id: id});
   }
 
+  searchAll(keyword: string): Observable<any> {
+    return this.httpClient.get(`http://localhost:8000/api/app/user/searchUser?keyword=${keyword}`);
+  }
+
 }

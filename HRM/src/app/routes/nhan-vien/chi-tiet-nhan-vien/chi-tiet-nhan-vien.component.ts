@@ -59,8 +59,6 @@ export class ChiTietNhanVienComponent implements OnInit {
     this.nhanVienService.getDetailUser(this.id).subscribe(res => {
       if (res.code == 200) {
         this.editForm.patchValue(res.data);
-        console.log(res.data);
-        console.log('editForm', this.editForm.value);
         this.gender = this.editForm.get('gender').value;
         this.editForm.disable();
       } else {
@@ -93,7 +91,7 @@ export class ChiTietNhanVienComponent implements OnInit {
 
   // handle navigate
   backList() {
-    this.router.navigate(['nhan-vien/danh-sach-nhan-vien'])
+    this.router.navigate(['dashboard/nhan-vien/danh-sach-nhan-vien'])
   }
 
   goToEdit() {

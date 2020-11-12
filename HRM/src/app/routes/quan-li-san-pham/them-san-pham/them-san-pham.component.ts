@@ -11,6 +11,12 @@ import {  NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ThemSanPhamComponent implements OnInit {
   createForm: FormGroup;
+  dsLoaiSP = [
+    {id: 0, name: 'SP Loại 1'},
+    {id: 1, name: 'SP Loại 2'},
+    {id: 2, name: 'SP Loại 3'},
+    {id: 3, name: 'SP Loại 4'}
+  ]
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -23,12 +29,13 @@ export class ThemSanPhamComponent implements OnInit {
       name: [null, [Validators.required]],
       price_in: [null, [Validators.required]],
       price_out: [null, [Validators.required]],
+      loaiSP: [null, Validators.required]
     })
   }
   
   // handle navigate
   goToList() {
-    this.router.navigate(['san-pham/danh-sach-san-pham']);
+    this.router.navigate(['dashboard/san-pham/danh-sach-san-pham']);
   }
 
   // submit form

@@ -8,7 +8,6 @@ import { ThemNhanVienComponent } from './them-nhan-vien/them-nhan-vien.component
 import { NhanVienRoutes } from './nhan-vien.routing';
 import { DangKiLichLamViecComponent } from './dang-ki-lich-lam-viec/dang-ki-lich-lam-viec.component';
 import { FormatPhoneDirective } from 'src/app/directive/format-phone/format-phone.directive';
-import { FormatLuongDirective } from 'src/app/directive/format-luong/format-luong.directive';
 
 @NgModule({
   imports: [
@@ -24,7 +23,6 @@ import { FormatLuongDirective } from 'src/app/directive/format-luong/format-luon
     ThemNhanVienComponent,
     DangKiLichLamViecComponent,
     FormatPhoneDirective,
-    FormatLuongDirective
   ]
 })
 export class NhanVienModule { }

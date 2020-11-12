@@ -13,7 +13,7 @@ import { ThemSanPhamComponent } from './them-san-pham/them-san-pham.component';
     declarations: [
         DsSanPhamComponent,
         ChiTietSanPhamComponent,
-        ThemSanPhamComponent
+        ThemSanPhamComponent,
     ]
 })
 

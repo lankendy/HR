@@ -39,8 +39,13 @@
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="file" nzRequired>Chọn file</nz-form-label>
               <nz-form-control [nzSpan]="14" nzErrorTip="File không được bỏ trống.">
-                <!-- <input nz-input name="file" type="file" id="file" formControlName="file"> -->
-                <app-upload-file></app-upload-file>
+                <!-- <app-file-uploader></app-file-uploader> -->
+               <!-- <app-file-list></app-file-list> -->
+               <form [formGroup] = "formGroup">
+                <input type="file" multiple (change)="selectImage($event)" />
+                <br/>
+                <!-- <button type="submit" (click)="onSubmit()">Upload</button> -->
+               </form>
               </nz-form-control>
             </nz-form-item >
           </div>

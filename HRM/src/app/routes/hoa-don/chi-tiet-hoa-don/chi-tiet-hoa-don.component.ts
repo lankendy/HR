@@ -25,7 +25,7 @@ export class ChiTietHoaDonComponent implements OnInit {
 
   // handle navigate
   goToList() {
-    this.router.navigate(['hoa-don/danh-sach-hoa-don']);
+    this.router.navigate(['dashboard/hoa-don/danh-sach-hoa-don']);
   }
 
   goToEdit() {
