@@ -13,7 +13,7 @@
       </div>
       <div nz-col nzSpan="12">
         <nz-input-group [nzSuffix]="suffixIconSearch">
-          <input type="text" nz-input placeholder="Tìm kiếm ..." [(ngModel)]="keyword" (ngModelChange)="searchAll(keyword)"/>
+          <input type="text" nz-input placeholder="Tìm kiếm ..." [(ngModel)]="keyword2" (ngModelChange)="searchAll(keyword2)"/>
         </nz-input-group>
         <ng-template #suffixIconSearch>
           <i nz-icon nzType="search"></i>
@@ -28,7 +28,7 @@
             <label for="denNgay">Đến ngày:</label>
             <input type="date" name="denNgay" [(ngModel)]="createDateEnd">
           </div>
-          <button nz-button nzType="default" nzShape="circle" (click)="searchDate()"><i nz-icon nzType="search"></i></button>
+          <button nz-button nzType="default" nzShape="circle" (click)="searchDate(createDateStart, createDateEnd)"><i nz-icon nzType="search"></i></button>
         </div>
       </div>
     </div>

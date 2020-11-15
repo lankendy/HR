@@ -10,7 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class DanhSachHoaDonComponent implements OnInit {
   isLoading = false;
-  keyword:string;
+  keyword2:string;
   createDateStart;
   createDateEnd;
   listOfSelection = [
@@ -110,7 +110,14 @@ export class DanhSachHoaDonComponent implements OnInit {
 
   // searchDate
   searchDate() {
-    this.billService.searchWithDate();
+    this.billService.searchWithDate(this.createDateStart, this.createDateEnd).subscribe(res => {
+      if (res.code == 200) {
+        this.dsBill = res.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    });
   }
 
   // reload
