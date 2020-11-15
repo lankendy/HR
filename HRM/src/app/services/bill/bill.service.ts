@@ -35,4 +35,8 @@ export class BillService {
     return this.http.get(`http://localhost:8000/api/app/bill/searchBill?keyword=${body}`);
   }
 
+  searchWithDate(): Observable<any> {
+    return this.http.get('');
+  }
+
 }

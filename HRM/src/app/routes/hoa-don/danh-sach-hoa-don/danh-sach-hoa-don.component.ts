@@ -11,6 +11,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class DanhSachHoaDonComponent implements OnInit {
   isLoading = false;
   keyword:string;
+  createDateStart;
+  createDateEnd;
   listOfSelection = [
     {
       text: 'Select All Row',
@@ -104,6 +106,11 @@ export class DanhSachHoaDonComponent implements OnInit {
         this.message.error('Đã có lỗi xảy ra.')
       }
     })
+  }
+
+  // searchDate
+  searchDate() {
+    this.billService.searchWithDate();
   }
 
   // reload

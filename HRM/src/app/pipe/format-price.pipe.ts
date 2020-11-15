@@ -6,7 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FormatPricePipe implements PipeTransform {
 
   transform(input: number): any {
-    let result = input.toString();
+    let result;
+    if (input) {
+      result = input.toString();
+    }
     for (let i = 0; i < result.length; i++) {
       if (result[i] == ',') {
         result = result.replace(",", "");
