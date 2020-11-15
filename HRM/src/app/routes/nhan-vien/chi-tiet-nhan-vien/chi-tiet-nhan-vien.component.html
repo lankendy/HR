@@ -46,6 +46,42 @@
       <div nz-row>
         <div nz-col nzSpan="12">
           <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="ngayvao" nzRequired>Ngày bắt đầu</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Ngày bắt đầu không được bỏ trống.">
+              <input nz-input type="date" formControlName="startDate" name="ngayvao" id="ngayvao" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="sotk" nzRequired>Số TK Ngân hàng</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Số TK không được bỏ trống.">
+              <input nz-input formControlName="bankAccount" name="sotk" id="sotk" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="nganhang" nzRequired>Ngân hàng</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Ngân hàng không được bỏ trống.">
+              <input nz-input formControlName="bankName" name="nganhang" id="nganhang" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="cmnd" nzRequired>CMND</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="CMND không được bỏ trống.">
+              <input nz-input formControlName="cmnd" name="cmnd" id="cmnd" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="ngaysinh" nzRequired>Ngày sinh</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Ngày sinh không được bỏ trống.">
               <input nz-input type="date" id="ngaysinh" formControlName="birthday"/>

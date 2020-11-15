@@ -1,15 +1,16 @@
 import { BillService } from './../../../services/bill/bill.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-danh-sach-hoa-don',
   templateUrl: './danh-sach-hoa-don.component.html',
-  styleUrls: ['./danh-sach-hoa-don.component.scss']
+  styleUrls: ['./danh-sach-hoa-don.component.scss'],
 })
 export class DanhSachHoaDonComponent implements OnInit {
   isLoading = false;
+  keyword:string;
   listOfSelection = [
     {
       text: 'Select All Row',
@@ -47,16 +48,6 @@ export class DanhSachHoaDonComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.listOfData = new Array(200).fill(0).map((_, index) => {
-      return {
-        id: index,
-        ten: `Edward King ${index}`,
-        tenSP: `dien thoai ${index}`,
-        tenKH: `khach hang ${index}`,
-        tongTien: `1500${index}`
-      };
-    });
-
     this.getAllBill();
   }
 
@@ -71,6 +62,19 @@ export class DanhSachHoaDonComponent implements OnInit {
       }
     })
     
+  }
+
+  // delete bill
+  deleteRecord(id) {
+    this.billService.deleteBill(id).subscribe(res => {
+      if (res.code == 200) {
+        this.message.success('Đã xóa thành công.');
+        this.getAllBill();
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
   }
 
   // handle loading-button
@@ -88,6 +92,23 @@ export class DanhSachHoaDonComponent implements OnInit {
     } else {
       this.setOfCheckedId.delete(id);
     }
+  }
+
+  // searchAll
+  searchAll(event) {
+    this.billService.searchAll(event).subscribe(res => {
+      if (res.code == 200) {
+        this.dsBill = res.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.')
+      }
+    })
+  }
+
+  // reload
+  reload() {
+    this.getAllBill();
   }
 
   onItemChecked(id: number, checked: boolean): void {
@@ -111,8 +132,8 @@ export class DanhSachHoaDonComponent implements OnInit {
   }
 
   // handle navigate
-  getDetail() {
-    this.router.navigate(['dashboard/hoa-don/chi-tiet-hoa-don'])
+  getDetail(id) {
+    this.router.navigate(['dashboard/hoa-don/chi-tiet-hoa-don', {id: id}])
   }
 
   goToCreate() {

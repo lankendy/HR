@@ -66,6 +66,8 @@ import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { NzI18nModule } from 'ng-zorro-antd/i18n';
 import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormatLuongDirective } from 'src/app/directive/format-luong/format-luong.directive';
+import { FormatPricePipe } from 'src/app/pipe/format-price.pipe';
 
 @NgModule({
   imports: [
@@ -133,7 +135,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzDividerModule,
     ReactiveFormsModule
   ],
-  declarations: [],
+  declarations: [
+    FormatLuongDirective,
+    FormatPricePipe
+  ],
   exports: [
     NzAffixModule,
     NzAlertModule,
@@ -199,7 +204,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzTypographyModule,
     NzUploadModule,
     NzWaveModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormatLuongDirective,
+    FormatPricePipe
   ]
 })
 export class CommonComponentAntModule { }

@@ -31,13 +31,16 @@
               <div *ngFor="let sp of infoSP.controls; let i = index">
                 <div [formGroupName]="i" class="san-pham">
                   <nz-select class="input-sp" nzPlaceHolder="Chọn sản phẩm" nzShowSearch nzAllowClear
-                    formControlName="tenSP" (ngModelChange)="changeSP($event, i)">
+                    formControlName="product_id" (ngModelChange)="changeSP($event, i)">
                     <nz-option *ngFor="let cv of dsSanPham" [nzLabel]="cv.name" [nzValue]="cv.id"></nz-option>
                   </nz-select>
-                  <input class="input-sp" [disabled]="true" nz-input type="number" formControlName="giaSP"
+                  <input class="input-sp" [disabled]="true" type="text" nz-input formControlName="price_out"
                     placeholder="0,000,000 VNĐ">
                   <input class="input-sp" nz-input placeholder="Chọn số lượng" name="sl" type="number" id="sl"
-                    formControlName="soLuong">
+                    formControlName="total" (ngModelChange)="changeTotalProduct($event, i)">
+                  <ng-container *ngIf="infoSP.at(i).get('total')?.errors?.min">
+                    <span style="color: red">Số lượng nhỏ nhất là 1.</span>
+                  </ng-container>
                   <button nz-button (click)="removeSP(i)" nzShape="circle">-</button>
                 </div>
               </div>

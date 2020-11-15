@@ -5,3 +5,18 @@
 .icon-info {
     cursor: pointer;
 }
+
+.search-date {
+    display: flex;
+    margin-top: 10px;
+    .date {
+        width: 35%;
+        label {
+            margin-right: 5px;
+        }
+        input {
+            border: 1px solid #ccc;
+            height: 30px;
+        }
+    }
+}

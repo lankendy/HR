@@ -35,6 +35,10 @@ export class ThemNhanVienComponent implements OnInit {
     this.createForm = this.fb.group({
       name: [null, Validators.required],
       position_id: [null, Validators.required],
+      startDate: [null, Validators.required],
+      bankAccount: [null, Validators.required],
+      bankName: [null, Validators.required],
+      cmnd: [null, Validators.required],
       birthday: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       phone: [null, [Validators.maxLength(13), Validators.required, phoneValidator('0973 996 209')]],

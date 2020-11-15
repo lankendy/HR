@@ -1,42 +1,64 @@
-  <nz-card nzBordered='false'>
-    <form nz-form [formGroup]="editForm">
+<nz-card nzBordered='false'>
+  <form nz-form [formGroup]="editForm">
+    <div nz-row>
+      <h2>Chi tiết hóa đơn</h2>
+    </div>
+    <div nz-row>
+      <button nz-button [disabled]="editForm.invalid" nzType="primary" class="btn-margin" (click)="submitForm()">
+        <i nz-icon nzType="save" nzTheme="outline"></i>Lưu</button>
+      <button nz-button nzType="default" class="btn-margin" (click)="goToEdit()">
+        <i nz-icon nzType="edit" nzTheme="outline"></i>Sửa</button>
+      <button nz-button nzType="default" (click)="goToList()">
+        <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
+    </div>
+    <nz-card>
       <div nz-row>
-        <h2>Thêm mới hóa đơn</h2>
-      </div>
-      <div nz-row>
-        <button nz-button nzType="primary" class="btn-margin">
-          <i nz-icon nzType="save" nzTheme="outline"></i>Lưu</button>
-        <button nz-button nzType="default" class="btn-margin" (click)="goToEdit()">
-          <i nz-icon nzType="edit" nzTheme="outline"></i>Sửa</button>
-        <button nz-button nzType="default" (click)="goToList()">
-          <i nz-icon nzType="close" nzTheme="outline"></i>Hủy bỏ</button>
-      </div>
-      <nz-card>
-        <div nz-row>
+        <div nz-col nzSpan="24">
           <nz-form-item>
-            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Tên người tạo</nz-form-label>
+            <nz-form-label nzRequired [nzSpan]="6" nzFor="ten">Người bán</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Tên người tạo không được bỏ trống.">
-              <input nz-input name="ten" type="text" id="ten" formControlName="tenNguoiTao">
+              <nz-select nzShowSearch nzAllowClear nzSize="default" style="width: 100%;" formControlName="user_id"
+                nzPlaceHolder="Chọn tên nhân viên">
+                <nz-option *ngFor="let nv of dsNV " [nzLabel]="nv.name" [nzValue]="nv.id"></nz-option>
+              </nz-select>
             </nz-form-control>
-          </nz-form-item >
+          </nz-form-item>
         </div>
-        <div nz-row>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label [nzSpan]="6" nzFor="tenSP" nzRequired>Tên sản phẩm</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Tên sản phẩm không được bỏ trống.">
-              <input nz-input name="tenSP" type="text" id="tenSP" formControlName="tenSP">
+              <nz-select class="input-sp" nzPlaceHolder="Chọn sản phẩm" nzShowSearch nzAllowClear
+                formControlName="product_id">
+                <nz-option *ngFor="let cv of dsSanPham" [nzLabel]="cv.name" [nzValue]="cv.id"></nz-option>
+              </nz-select>
             </nz-form-control>
-          </nz-form-item >
+          </nz-form-item>
         </div>
-        <div nz-row>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
           <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzFor="ngaysinh" nzRequired>Số lượng</nz-form-label>
+            <nz-form-label [nzSpan]="6" nzFor="soluong" nzRequired>Số lượng</nz-form-label>
             <nz-form-control [nzSpan]="14" nzErrorTip="Số lượng không được bỏ trống.">
-              <input nz-input name="ngaysinh" type="text" id="ngaysinh" formControlName="soLuong">
+              <input nz-input name="soluong" type="text" id="ngaysinh" formControlName="total" (ngModelChange)="changeTotalProduct($event)">
             </nz-form-control>
-          </nz-form-item >
+          </nz-form-item>
         </div>
-  
-      </nz-card>
-    </form>
-  </nz-card>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="price" nzRequired>Tổng tiền</nz-form-label>
+            <nz-form-control [nzSpan]="14" nzErrorTip="Tổng tiền không được bỏ trống.">
+              <input nz-input name="price" type="text" id="price" formControlName="price">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+    </nz-card>
+  </form>
+</nz-card>

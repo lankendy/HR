@@ -22,7 +22,7 @@ import { FormatPhoneDirective } from 'src/app/directive/format-phone/format-phon
     DsNhanVienComponent,
     ThemNhanVienComponent,
     DangKiLichLamViecComponent,
-    FormatPhoneDirective,
+    FormatPhoneDirective
   ]
 })
 export class NhanVienModule { }

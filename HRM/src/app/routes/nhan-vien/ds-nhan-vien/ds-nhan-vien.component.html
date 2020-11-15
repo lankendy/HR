@@ -38,33 +38,13 @@
       <tr>
         <th nzWidth="50px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
         <th nzWidth="50px">STT</th>
-        <th nzCustomFilter>Họ và tên
-          <nz-filter-trigger [(nzVisible)]="visibleHoVaTen" [nzActive]="searchValueHoTen.length > 0"
-            [nzDropdownMenu]="HoTen">
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
-        <th nzCustomFilter>Email
-          <nz-filter-trigger [(nzVisible)]="visibleEmail" [nzActive]="searchValueEmail.length > 0"
-            [nzDropdownMenu]="Email">
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
+        <th nzCustomFilter>Họ và tên</th>
+        <th nzCustomFilter>Email</th>
         <th nzWidth="100px">Lương</th>
-        <th nzCustomFilter nzWidth="100px">SĐT
-          <nz-filter-trigger [(nzVisible)]="visibleSDT" [nzActive]="searchValueSDT.length > 0" [nzDropdownMenu]="SDT">
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
-        <th nzCustomFilter>Địa chỉ
-          <nz-filter-trigger [(nzVisible)]="visibleDiaChi" [nzActive]="searchValueDiaChi.length > 0"
-            [nzDropdownMenu]="DiaChi">
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
-        <th [nzFilters]="filterChucVu.listOfFilterChucVu"
-          [nzFilterMultiple]="filterChucVu.filterMultiple">Chức vụ</th>
-        <th>Thao tác</th>
+        <th nzCustomFilter nzWidth="100px">SĐT</th>
+        <th nzCustomFilter nzWidth="100px">Ngày vào</th>
+        <th>Chức vụ</th>
+        <th nzWidth="100px">Thao tác</th>
       </tr>
     </thead>
     <tbody>
@@ -75,7 +55,7 @@
         <td>{{ data.email }}</td>
         <td>{{ data.salary}}</td>
         <td>{{ data.phone }}</td>
-        <td>{{ data.address}}</td>
+        <td>{{ data.startDate | date: 'dd/MM/yyyy'}}</td>
         <td>{{ data.position.name}}</td>
         <td>
           <i (click)="getDetail(data)" class="icon-info" style="font-size: 16px; color:#28B463; margin-right: 10px; " nz-icon nz-popover

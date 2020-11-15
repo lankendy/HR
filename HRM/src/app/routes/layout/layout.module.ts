@@ -12,7 +12,6 @@ import { SuKienModule } from '../su-kien/su-kien.module';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 import { LayoutComponent } from './layout/layout.component';
 import { LayoutRoutes } from './layout.routing';
-import { FormatLuongDirective } from 'src/app/directive/format-luong/format-luong.directive';
 
 @NgModule({
   imports: [
@@ -33,7 +32,6 @@ import { FormatLuongDirective } from 'src/app/directive/format-luong/format-luon
   declarations: [
     PageNotFoundComponent,
     LayoutComponent,
-    FormatLuongDirective
   ]
 })
 export class LayoutModule { }

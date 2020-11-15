@@ -18,7 +18,7 @@ export class UploadService {
   public download(fileName: string): void {
 
   }
-
+ 
   remove(fileName): void {
     this.fileList.splice(this.fileList.findIndex(name => name === fileName), 1);
     this.fileList$.next(this.fileList);

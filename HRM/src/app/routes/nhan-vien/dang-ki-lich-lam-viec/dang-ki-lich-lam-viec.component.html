@@ -1,180 +1,217 @@
 <nz-card>
   <h2>Đăng kí lịch làm việc</h2>
-  Từ ngày: <input class="input" value="startDate" type="date" [(ngModel)]="startDate" (ngModelChange)="changeDate($event)" style="margin-right: 5px;"> Đến ngày: <input class="input" type="date" [(ngModel)]="lastDate">
+  Từ ngày: <input class="input" value="startDate" type="date" [(ngModel)]="startDate"
+    (ngModelChange)="changeDate($event)" style="margin-right: 5px;"> Đến ngày: <input class="input" type="date"
+    [(ngModel)]="lastDate">
 </nz-card>
 <nz-card>
-  <button nz-button nzType="primary" class="margin-bottom" (click)="showModalDKLV()">
-    <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
-  <nz-table #nzTable nzShowSizeChanger [nzData]="listOfDisplayData">
-    <thead>
-      <tr>
-        <th>STT</th>
-        <th>Mã NV</th>
-        <th>Tên nhân viên</th>
-        <th nzWidth="150px">Loại</th>
-        <th nzWidth="200px">Ghi chú</th>
-        <th>Ngày đăng kí</th>
-        <th nzWidth="150px">Trạng thái</th>
-        <th nzWidth="150px">Thao tác</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of nzTable.data; let i = index">
-        <td>{{i + 1}}</td>
-        <td>{{data.code}}</td>
-        <td>{{data.name}}</td>
-        <td>
-          <ng-container [ngSwitch]="data.loai">
-            <ng-container *ngSwitchCase="0">
-              <nz-tag>Làm thêm ngày thường</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="1">
-              <nz-tag>Làm thêm ngày lễ</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="2">
-              <nz-tag>Làm thêm ngày nghỉ</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="3">
-              <nz-tag>Làm thêm giờ</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="4">
-              <nz-tag>Nghỉ phép</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="5">
-              <nz-tag>Nghỉ được phép của cấp trên</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="6">
-              <nz-tag>Nghỉ lý do riêng</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="7">
-              <nz-tag>Nghỉ thai sản</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="8">
-              <nz-tag>Nghỉ ốm</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="9">
-              <nz-tag>Đổi ca làm - nghỉ</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="10">
-              <nz-tag>Đổi ca làm - làm</nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="11">
-              <nz-tag>Nghỉ hỉ, hiếu</nz-tag>
-            </ng-container>
-          </ng-container>
-        </td>
-        <td>{{data.ghiChu}}</td>
-        <td>{{data.ngayDangKi}}</td>
-        <td>
-          <ng-container [ngSwitch]="data.status">
-            <ng-container *ngSwitchCase="0">
-              <nz-tag nzColor="processing">
-                <i nz-icon nzType="sync" nzSpin></i>
-                <span>Đang chờ phê duyệt</span>
-              </nz-tag>
-            </ng-container>
-            <ng-container *ngSwitchCase="1">
-              <nz-tag nzColor="success">
-                <i nz-icon nzType="check-circle"></i>
-                <span>Xác nhận</span>
-              </nz-tag>
-            </ng-container>
-          </ng-container>
-        </td>
-        <td>
-          <button nz-button nzShape="circle" (click)="deleteDangKi(data)" style="color: #fff; background-color: #FFA07A; margin-right: 7px;" nz-popover nzPopoverContent="Xóa"><i
-              nz-icon nzType="delete"></i></button>
-          <button nz-button nzShape="circle" style="color: #fff; background-color: #F4D03F; margin-right: 7px" nz-popover nzPopoverContent="Phê duyệt"
-          (click)="pheDuyetDangKi(i)"><i nz-icon nzType="audit"></i></button>
-          <button nz-button nzShape="circle" style="color: #fff; background: #85929E;" nz-popover nzPopoverContent="Reset"
-          (click)="resetPheDuyet(i)">
-            <i nz-icon nzType="rollback"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+  <!-- tab -->
+  <nz-tabset>
+    <nz-tab nzTitle="Đăng kí làm">
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width: 50%; float: right">
+        <input type="text" nz-input placeholder="tìm kiếm" [(ngModel)]="keyLV" (ngModelChange)="searchAllNgayLV(keyLV)"
+        [ngModelOptions]="{standalone: true}"/>
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+        <button nz-button nzType="primary" class="margin-bottom" (click)="showModalDKLV()">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
+      <nz-table #nzTable nzShowSizeChanger [nzData]="listOfDisplayDataLV">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã NV</th>
+            <th>Tên nhân viên</th>
+            <th nzWidth="150px">Loại</th>
+            <th nzWidth="200px">Ghi chú</th>
+            <th>Ngày đăng kí</th>
+            <th nzWidth="150px">Trạng thái</th>
+            <th nzWidth="150px">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of nzTable.data; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{data.user_id}}</td>
+            <td>{{data.user.name}}</td>
+            <td>
+              {{data.name}}
+            </td>
+            <td>{{data.description}}</td>
+            <td>{{data.date | date: 'dd/MM/yyyy'}}</td>
+            <td>
+              <ng-container [ngSwitch]="data.status">
+                <ng-container *ngSwitchCase="0">
+                  <nz-tag nzColor="processing">
+                    <i nz-icon nzType="sync" nzSpin></i>
+                    <span>Đang chờ phê duyệt</span>
+                  </nz-tag>
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  <nz-tag nzColor="success">
+                    <i nz-icon nzType="check-circle"></i>
+                    <span>Xác nhận</span>
+                  </nz-tag>
+                </ng-container>
+              </ng-container>
+            </td>
+            <td>
+              <button nz-button nzShape="circle" (click)="deleteLichLamViec(data.id)"
+                style="color: #fff; background-color: #FFA07A; margin-right: 7px;" nz-popover nzPopoverContent="Xóa"><i
+                  nz-icon nzType="delete"></i></button>
+              <button nz-button nzShape="circle" style="color: #fff; background-color: #F4D03F; margin-right: 7px"
+                nz-popover nzPopoverContent="Phê duyệt" (click)="pheDuyetDangKi(data.id)"><i nz-icon
+                  nzType="audit"></i></button>
+              <button nz-button nzShape="circle" style="color: #fff; background: #85929E;" nz-popover
+                nzPopoverContent="Reset" (click)="resetPheDuyet(data.id)">
+                <i nz-icon nzType="rollback"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+    <nz-tab nzTitle="Đăng kí nghỉ">
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width: 50%; float: right">
+        <input type="text" nz-input placeholder="tìm kiếm" [(ngModel)]="keyLN" (ngModelChange)="searchAllNgayLN(keyLN)"
+        [ngModelOptions]="{standalone: true}"/>
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+      <button nz-button nzType="primary" class="margin-bottom" (click)="showModalDKLN()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>Tạo</button>
+      <nz-table #nzTable2 nzShowSizeChanger [nzData]="listOfDisplayDataLN">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã NV</th>
+            <th>Tên nhân viên</th>
+            <th nzWidth="150px">Loại</th>
+            <th nzWidth="200px">Ghi chú</th>
+            <th>Ngày đăng kí</th>
+            <th nzWidth="150px">Trạng thái</th>
+            <th nzWidth="150px">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of nzTable2.data; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{data.user_id}}</td>
+            <td>{{data.user.name}}</td>
+            <td>
+              {{data.name}}
+            </td>
+            <td>{{data.description}}</td>
+            <td>{{data.date | date: 'dd/MM/yyyy'}}</td>
+            <td>
+              <ng-container [ngSwitch]="data.status">
+                <ng-container *ngSwitchCase="0">
+                  <nz-tag nzColor="processing">
+                    <i nz-icon nzType="sync" nzSpin></i>
+                    <span>Đang chờ phê duyệt</span>
+                  </nz-tag>
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  <nz-tag nzColor="success">
+                    <i nz-icon nzType="check-circle"></i>
+                    <span>Xác nhận</span>
+                  </nz-tag>
+                </ng-container>
+              </ng-container>
+            </td>
+            <td>
+              <button nz-button nzShape="circle" (click)="deleteLichLamViec(data.id)"
+                style="color: #fff; background-color: #FFA07A; margin-right: 7px;" nz-popover nzPopoverContent="Xóa"><i
+                  nz-icon nzType="delete"></i></button>
+              <button nz-button nzShape="circle" style="color: #fff; background-color: #F4D03F; margin-right: 7px"
+                nz-popover nzPopoverContent="Phê duyệt" (click)="pheDuyetDangKi(data.id)"><i nz-icon
+                  nzType="audit"></i></button>
+              <button nz-button nzShape="circle" style="color: #fff; background: #85929E;" nz-popover
+                nzPopoverContent="Reset" (click)="resetPheDuyet(data.id)">
+                <i nz-icon nzType="rollback"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+  </nz-tabset>
+
 </nz-card>
 
-<nz-modal [(nzVisible)]="isVisibleModalDKLV" nzFooter="nzModalFooter" nzTitle="Đăng kí lịch làm việc" (nzOnCancel)="handleCancelModal()"
-  (nzOnOk)="handleOkModal()">
-  <form [formGroup]="formModal">
-
+<!-- modal đăng kí ngày làm việc -->
+<nz-modal [(nzVisible)]="isVisibleModalDKLV" nzFooter="nzModalFooter" nzTitle="Đăng kí lịch làm việc"
+  (nzOnCancel)="handleCancelModalLV()" (nzOnOk)="handleOkModalLV()" nzWidth="800px">
+  <form [formGroup]="formModalLV">
     <div class="flex-container">
       <div class="flex-item1"><label for="tennv">Tên nhân viên (<span class="require">*</span>):</label></div>
       <div class="flex-item2">
-        <nz-select [(ngModel)]="tenNhanvien" nzShowSearch  nzAllowClear nzSize="default" style="width: 100%;" formControlName="idNhanVien"
-          nzPlaceHolder="Chọn tên nhân viên">
+        <nz-select nzShowSearch nzAllowClear nqqzSize="default" style="width: 100%;"
+          formControlName="user_id" nzPlaceHolder="Chọn tên nhân viên">
           <nz-option *ngFor="let nv of listNhanVien" [nzLabel]="nv.name" [nzValue]="nv.id"></nz-option>
         </nz-select>
       </div>
     </div>
-    <ng-container *ngIf="tennhanvien?.invalid && (tennhanvien?.touched || tennhanvien?.dirty)">
-      <ng-container *ngIf="tennhanvien.errors.required">
+    <ng-container *ngIf="user_id_lv?.invalid && (user_id_lv?.touched || user_id_lv?.dirty)">
+      <ng-container *ngIf="user_id_lv.errors.required">
         <span class="require">(*)Tên nhân viên bắt buộc nhập.</span>
       </ng-container>
     </ng-container>
-
     <div class="flex-container">
-      <div class="flex-item1"><label for="loai">Loại (<span class="require">*</span>):</label></div>
-      <div class="flex-item2">
-        <nz-select nzSize="default" nzAllowClear style="width: 100%;" formControlName="loai" nzPlaceHolder="Chọn loại đăng kí">
-          <nz-option *ngFor="let dk of dsLoaiDangKi" [nzLabel]="dk.name" [nzValue]="dk.code"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-    <ng-container *ngIf="loai?.invalid && (loai?.touched || loai?.dirty)">
-      <ng-container *ngIf="loai.errors.required">
-        <span class="require">(*) Loại bắt buộc nhập.</span>
-      </ng-container>
-    </ng-container>
-
-    <div class="flex-container">
-      <div class="flex-item1"><label for="ghichu">Ghi chú:</label></div>
-      <div class="flex-item2"><textarea class="input-textarea" rows="4" name="ghichu" id="ghichu"
-          formControlName="ghichu"></textarea></div>
+      <div class="flex-item1"><label for="description">Ghi chú:</label></div>
+      <div class="flex-item2"><textarea class="input-textarea" rows="4" name="description" id="description"
+          formControlName="description"></textarea></div>
     </div>
 
     <div class="flex-container">
-      <div class="flex-item1"><label for="ngaydangki">Ngày đăng kí (<span class="require">*</span>):</label></div>
+      <div class="flex-item1"><label for="date">Ngày đăng kí (<span class="require">*</span>):</label></div>
       <div class="flex-container flex-item2 f-column">
-        <div formArrayName="ngaydangki">
-          <div *ngFor="let ndk of ngaydangki.controls; let i = index">
+        <div formArrayName="list">
+          <div *ngFor="let ndk of list_lv.controls; let i = index">
             <div [formGroupName]="i" class="flex-container">
-              <input class="input mr"  type="date" name="ngayDangKi" formControlName="ngayDangKi">
-              <ng-container *ngIf="ngaydangki.at(i).get('ngayDangKi')?.invalid && (ngaydangki.at(i).get('ngayDangKi')?.touched || ngaydangki.at(i).get('ngayDangKi')?.dirty)">
-                <ng-container *ngIf="ngaydangki.at(i).get('ngayDangKi').errors.required">
+              <input class="input mr" type="date" name="date" formControlName="date">
+              <ng-container
+                *ngIf="list_lv.at(i).get('date')?.invalid && (list_lv.at(i).get('date')?.touched || list_lv.at(i).get('date')?.dirty)">
+                <ng-container *ngIf="list_lv.at(i).get('date').errors.required">
                   <span class="require">(*) Ngày đăng kí bắt buộc nhập.</span>
                 </ng-container>
               </ng-container>
-              <input class="input mr" name="soNgay" type="number" maxlength="2" pattern="^[0-9]*$" formControlName="soNgay" placeholder="Chọn số ngày">
-              <ng-container *ngIf="ngaydangki.at(i).get('soNgay')?.invalid && ( ngaydangki.at(i).get('soNgay')?.dirty || ngaydangki.at(i).get('soNgay')?.touched)">
-                <ng-container *ngIf="ngaydangki.at(i).get('soNgay').errors.required">
+              <input class="input mr" name="soNgay" type="number" maxlength="2" pattern="^[0-9]*$" formControlName="day"
+                placeholder="Chọn số ngày">
+              <ng-container
+                *ngIf="list_lv.at(i).get('soNgay')?.invalid && ( list_lv.at(i).get('soNgay')?.dirty || list_lv.at(i).get('soNgay')?.touched)">
+                <ng-container *ngIf="list_lv.at(i).get('soNgay').errors.required">
                   <span class="require">(*) Số ngày bắt buộc nhập.</span>
                 </ng-container>
-                <ng-container *ngIf="ngaydangki.at(i).get('soNgay').errors.maxLength">
+                <ng-container *ngIf="list_lv.at(i).get('soNgay').errors.maxLength">
                   <span class="require">(*) Độ dài kí tự lớn nhất là 2.</span>
                 </ng-container>
-                <ng-container *ngIf="ngaydangki.at(i).get('soNgay').errors.max">
+                <ng-container *ngIf="list_lv.at(i).get('soNgay').errors.max">
                   <span class="require">(*) Số ngày lớn nhất là 31.</span>
                 </ng-container>
-                <ng-container *ngIf="ngaydangki.at(i).get('soNgay').errors.pattern">
+                <ng-container *ngIf="list_lv.at(i).get('soNgay').errors.pattern">
                   <span class="require">(*) Số ngày chỉ được phép là số.</span>
                 </ng-container>
               </ng-container>
-              <button nz-button (click)="removeNgayDangKi(i)" nzShape="circle">-</button>
+              <nz-select nzSize="default" nzAllowClear style="width: 100%;" formControlName="type"
+                nzPlaceHolder="Chọn loại đăng kí">
+                <nz-option *ngFor="let dk of dsNgayLam" [nzLabel]="dk.name" [nzValue]="dk.id"></nz-option>
+              </nz-select>
+              <button nz-button (click)="removedateLV(i)" nzShape="circle">-</button>
             </div>
           </div>
         </div>
         <div>
-          <button nz-button type="button" (click)="addNgayDangKi()" nzShape="circle"> + </button>
+          <button nz-button type="button" (click)="adddateLV()" nzShape="circle"> + </button>
         </div>
       </div>
     </div>
     <div class="flex-container">
-      <div class="flex-item1"><label for="trangthai">Trạng thái:</label></div>
+      <div class="flex-item1"><label for="status">Trạng thái:</label></div>
       <div class="flex-item2">
-        <ng-container *ngIf="formModal.get('trangthai').value == 0">
+        <ng-container *ngIf="formModalLV.get('status').value == 0">
           <nz-tag nzColor="processing">
             <i nz-icon nzType="sync" nzSpin></i>
             <span>Đang chờ phê duyệt</span>
@@ -184,7 +221,92 @@
     </div>
   </form>
   <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="handleCancelModal()">Hủy</button>
-    <button nz-button nzType="primary" [disabled]="!formModal.valid" (click)="handleOkModal()">OK</button>
+    <button nz-button nzType="default" (click)="handleCancelModalLV()">Hủy</button>
+    <button nz-button nzType="primary" [disabled]="!formModalLV.valid" (click)="handleOkModalLV()">OK</button>
+  </div>
+</nz-modal>
+
+<!-- modal đăng kí ngày nghỉ -->
+<nz-modal [(nzVisible)]="isVisibleModalDKLN" nzFooter="nzModalFooter" nzTitle="Đăng kí ngày nghỉ"
+  (nzOnCancel)="handleCancelModalLN()" (nzOnOk)="handleOkModalLN()" nzWidth="800px">
+  <form [formGroup]="formModalLN">
+    <div class="flex-container">
+      <div class="flex-item1"><label for="tennv">Tên nhân viên (<span class="require">*</span>):</label></div>
+      <div class="flex-item2">
+        <nz-select nzShowSearch nzAllowClear nzSize="default" style="width: 100%;"
+          formControlName="user_id" nzPlaceHolder="Chọn tên nhân viên">
+          <nz-option *ngFor="let nv of listNhanVien" [nzLabel]="nv.name" [nzValue]="nv.id"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <ng-container *ngIf="user_id_ln?.invalid && (user_id_ln?.touched || user_id_ln?.dirty)">
+      <ng-container *ngIf="user_id_ln.errors.required">
+        <span class="require">(*)Tên nhân viên bắt buộc nhập.</span>
+      </ng-container>
+    </ng-container>
+    <div class="flex-container">
+      <div class="flex-item1"><label for="description">Ghi chú:</label></div>
+      <div class="flex-item2"><textarea class="input-textarea" rows="4" name="description" id="description"
+          formControlName="description"></textarea></div>
+    </div>
+
+    <div class="flex-container">
+      <div class="flex-item1"><label for="date">Ngày đăng kí (<span class="require">*</span>):</label></div>
+      <div class="flex-container flex-item2 f-column">
+        <div formArrayName="list">
+          <div *ngFor="let ndk of list_ln.controls; let i = index">
+            <div [formGroupName]="i" class="flex-container">
+              <input class="input mr" type="date" name="date" formControlName="date">
+              <ng-container
+                *ngIf="list_ln.at(i).get('date')?.invalid && (list_ln.at(i).get('date')?.touched || list_ln.at(i).get('date')?.dirty)">
+                <ng-container *ngIf="list_ln.at(i).get('date').errors.required">
+                  <span class="require">(*) Ngày đăng kí bắt buộc nhập.</span>
+                </ng-container>
+              </ng-container>
+              <input class="input mr" name="soNgay" type="number" maxlength="2" pattern="^[0-9]*$" formControlName="day"
+                placeholder="Chọn số ngày">
+              <ng-container
+                *ngIf="list_ln.at(i).get('soNgay')?.invalid && ( list_ln.at(i).get('soNgay')?.dirty || list_ln.at(i).get('soNgay')?.touched)">
+                <ng-container *ngIf="list_ln.at(i).get('soNgay').errors.required">
+                  <span class="require">(*) Số ngày bắt buộc nhập.</span>
+                </ng-container>
+                <ng-container *ngIf="list_ln.at(i).get('soNgay').errors.maxLength">
+                  <span class="require">(*) Độ dài kí tự lớn nhất là 2.</span>
+                </ng-container>
+                <ng-container *ngIf="list_ln.at(i).get('soNgay').errors.max">
+                  <span class="require">(*) Số ngày lớn nhất là 31.</span>
+                </ng-container>
+                <ng-container *ngIf="list_ln.at(i).get('soNgay').errors.pattern">
+                  <span class="require">(*) Số ngày chỉ được phép là số.</span>
+                </ng-container>
+              </ng-container>
+              <nz-select nzSize="default" nzAllowClear style="width: 100%;" formControlName="type"
+                nzPlaceHolder="Chọn loại đăng kí">
+                <nz-option *ngFor="let dk of dsNgayNghi" [nzLabel]="dk.name" [nzValue]="dk.id"></nz-option>
+              </nz-select>
+              <button nz-button (click)="removedateLN(i)" nzShape="circle">-</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button nz-button type="button" (click)="adddateLN()" nzShape="circle"> + </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex-container">
+      <div class="flex-item1"><label for="status">Trạng thái:</label></div>
+      <div class="flex-item2">
+        <ng-container *ngIf="formModalLN.get('status').value == 0">
+          <nz-tag nzColor="processing">
+            <i nz-icon nzType="sync" nzSpin></i>
+            <span>Đang chờ phê duyệt</span>
+          </nz-tag>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancelModalLN()">Hủy</button>
+    <button nz-button nzType="primary" [disabled]="!formModalLN.valid" (click)="handleOkModalLN()">OK</button>
   </div>
 </nz-modal>

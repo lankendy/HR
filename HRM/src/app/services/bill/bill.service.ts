@@ -19,4 +19,20 @@ export class BillService {
     return this.http.post('http://localhost:8000/api/app/bill/addBill', body);
   }
 
+  deleteBill(id: any): Observable<any> {
+    return this.http.post('http://localhost:8000/api/app/bill/deleteBill', {id: id});
+  }
+
+  getDetailBill(id: any): Observable<any> {
+    return this.http.get(`http://localhost:8000/api/app/bill/getBillInfo?id=${id}`);
+  }
+
+  updateBill(body): Observable<any> {
+    return this.http.post('http://localhost:8000/api/app/bill/editBill', body);
+  }
+
+  searchAll(body: any): Observable<any> {
+    return this.http.get(`http://localhost:8000/api/app/bill/searchBill?keyword=${body}`);
+  }
+
 }

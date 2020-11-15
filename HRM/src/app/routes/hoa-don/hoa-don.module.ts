@@ -15,7 +15,7 @@ import { HoaDonRoutes } from './hoa-don.routing';
         DanhSachHoaDonComponent,
         ChiTietHoaDonComponent,
         ThemHoaDonComponent
-    ]
+    ],
 })
 
 export class HoaDonModule {}

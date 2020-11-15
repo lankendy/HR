@@ -5,24 +5,36 @@
             <h2>Danh sách hóa đơn</h2>
         </div>
         <div nz-row>
-          <button nz-button nzType="default" class="btn-margin">
-            <i nz-icon nzType="reload" nzTheme="outline"></i>Tải lại</button>
-          <button nz-button nzType="primary" class="btn-margin" (click)="goToCreate()">
-            <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
+            <button nz-button nzType="default" class="btn-margin" (click)="reload()">
+              <i nz-icon nzType="reload" nzTheme="outline"></i>Tải lại</button>
+            <button nz-button nzType="primary" class="btn-margin" (click)="goToCreate()">
+              <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mới</button>
         </div>
       </div>
       <div nz-col nzSpan="12">
         <nz-input-group [nzSuffix]="suffixIconSearch">
-          <input type="text" nz-input placeholder="Tìm kiếm ..." />
+          <input type="text" nz-input placeholder="Tìm kiếm ..." [(ngModel)]="keyword" (ngModelChange)="searchAll(keyword)"/>
         </nz-input-group>
         <ng-template #suffixIconSearch>
           <i nz-icon nzType="search"></i>
         </ng-template>
+
+        <div class="search-date">
+          <div class="date">
+            <label for="tuNgay">Từ ngày:</label>
+            <input type="date" name="tuNgay">
+          </div>
+          <div class="date">
+            <label for="denNgay">Đến ngày:</label>
+            <input type="date" name="denNgay">
+          </div>
+          <button nz-button nzType="default" nzShape="circle"><i nz-icon nzType="search"></i></button>
+        </div>
       </div>
     </div>
   </nz-card>    
   <nz-card>
-    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="dsBill" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
       <thead>
         <tr>
           <th nzWidth="50px"
@@ -31,9 +43,11 @@
             (nzCheckedChange)="onAllChecked($event)"
           ></th>
           <th>STT</th>
-          <th>Tên người tạo</th>
-          <th>Tên khách hàng</th>
+          <th>Người bán</th>
+          <th>Sản phẩm</th>
+          <th>Số lượng</th>
           <th>Tổng tiền</th>
+          <th>Ngày bán</th>
           <th>Thao tác</th>
         </tr>
       </thead>
@@ -41,11 +55,15 @@
         <tr *ngFor="let data of rowSelectionTable.data; let i = index">
           <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
           <td>{{i + 1}}</td>
-          <td>{{ data.ten }}</td>
-          <td>{{ data.tenKH }}</td>
-          <td> {{ data.tongTien }}</td>
-          <td (click)="getDetail()">
-            <i class="icon-info" style="font-size: 16px; color:#28B463 " nz-icon nz-popover nzPopoverContent="Chi tiết hóa đơn" nzType="info-circle" nzTheme="outline"></i>
+          <td>{{ data.user.name }}</td>
+          <td>{{ data.product.name}}</td>
+          <td>{{ data.total}}</td>
+          <td> {{ data.price | formatPrice}}</td>
+          <td>{{ data.createdAt | date: 'dd/MM/yyyy'}}</td>
+          <td>
+            <i (click)="getDetail(data.id)" class="icon-info" style="font-size: 16px; color:#28B463; margin-right: 10px; " nz-icon nz-popover nzPopoverContent="Chi tiết hóa đơn" nzType="info-circle" nzTheme="outline"></i>
+            <i (click)="deleteRecord(data.id)" nz-icon nzType="delete" nzTheme="outline" class="icon-info" nz-popover
+          nzPopoverContent="Xóa hóa đơn" style="font-size: 16px; color:#E74C3C "></i>
           </td>
         </tr>
       </tbody>

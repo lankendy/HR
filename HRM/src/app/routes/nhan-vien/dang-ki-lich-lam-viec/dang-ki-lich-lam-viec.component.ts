@@ -1,3 +1,5 @@
+import { DkLichLamViecService } from './../../../services/dang-ki-lich-lv/dk-lich-lam-viec.service';
+import { AbsenceTypeService } from './../../../services/absence-type/absence-type.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NhanVienService } from 'src/app/services/nhan-vien/nhan-vien.service';
 import { FormGroup, FormBuilder, Validator, Validators, FormArray } from '@angular/forms';
@@ -10,63 +12,85 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./dang-ki-lich-lam-viec.component.scss']
 })
 export class DangKiLichLamViecComponent implements OnInit {
-  listOfDisplayData = [
-    {code: 'NV001', name: 'Đỗ Thị Lan', loai: 0, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV002', name: 'Nguyễn Văn A', loai: 1, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV003', name: 'Đỗ Thị B', loai: 2, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV004', name: 'Đỗ Thị C', loai: 3, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 1},
-    {code: 'NV005', name: 'Đỗ Thị Lan2', loai: 2, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 1},
-    {code: 'NV006', name: 'Đỗ Thị Lan3', loai:1, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV007', name: 'Đỗ Thị Lan4', loai: 6, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 1},
-    {code: 'NV008', name: 'Đỗ Thị Lan5', loai: 7, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV009', name: 'Đỗ Thị Lan6', loai: 1, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 1},
-    {code: 'NV010', name: 'Đỗ Thị Lan7', loai: 1, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 1},
-    {code: 'NV011', name: 'Đỗ Thị Lan8', loai: 3, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV012', name: 'Đỗ Thị Lan9', loai: 2, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 1},
-    {code: 'NV013', name: 'Đỗ Thị Lan66', loai: 5, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0},
-    {code: 'NV014', name: 'Đỗ Thị Lan55', loai: 9, ghiChu: 'test', ngayDangKi: '27/09/2020', status: 0}
-  ];
+  listOfDisplayDataLV = [];
+  listOfDisplayDataLN = [];
   isVisibleModalDKLV = false;
-  formModal: FormGroup;
-  dsLoaiDangKi = [
-    {code: 0, name: 'Làm thêm ngày thường'},
-    {code: 1, name: 'Làm thêm ngày lễ'},
-    {code: 2, name: 'Làm thêm ngày nghỉ'},
-    {code: 3, name: 'Làm thêm giờ'},
-    {code: 4, name: 'Nghỉ phép'},
-    {code: 5, name: 'Nghỉ phép được phép của cấp trên'},
-    {code: 6, name: 'Nghỉ lí do riêng'},
-    {code: 7, name: 'Nghỉ thai sản'},
-    {code: 8, name: 'Làm ốm'},
-    {code: 9, name: 'Đổi ca làm - nghỉ'},
-    {code: 10, name: 'Đổi ca làm - làm'},
-    {code: 11, name: 'Nghỉ hỉ, hiếu'}
-  ];
-
-  tenNhanvien = '';
+  isVisibleModalDKLN = false;
+  formModalLV: FormGroup;
+  formModalLN: FormGroup;
   listNhanVien = [];
   startDate: string;
   lastDate: string;
+  keyLV: any;
+  keyLN: any;
+  // modal ngay lam
+  dsNgayLam = [];
+
+  // modal ngay nghi
+  dsNgayNghi = [];
   constructor(
     private formBuilder: FormBuilder,
     private nhanVienService: NhanVienService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private absenceService: AbsenceTypeService,
+    private dklichlamviecService: DkLichLamViecService
     ) { }
 
   ngOnInit() {
-    this.initialFormModal();
-    this.addNgayDangKi();
+    this.initialFormModalLV();
+    this.initialFormModalLN();
+    this.adddateLV();
+    this.adddateLN();
     this.getAllNhanVien();
     this.setDate();
+    this.getAllLichLamViec();
+    this.getAllLichNghi();
+    // modal ngay lam
+    this.getAllLoaiNgayLam();
+    // modal ngay nghi
+    this.getAllLoaiNgayNghi();
   }
 
-  initialFormModal() {
-    this.formModal = this.formBuilder.group({
-      idNhanVien: [null, [Validators.required]],
-      loai: [null, [Validators.required]],
-      ghichu: [null],
-      ngaydangki: this.formBuilder.array([]),
-      trangthai: [{value: 0, disabled: true}]
+  initialFormModalLV() {
+    this.formModalLV = this.formBuilder.group({
+      user_id: [null, [Validators.required]],
+      description: [null],
+      list: this.formBuilder.array([]),
+      status: [{value: 0, disabled: true}]
+    })
+  }
+
+  initialFormModalLN() {
+    this.formModalLN = this.formBuilder.group({
+      user_id: [null, [Validators.required]],
+      description: [null],
+      list: this.formBuilder.array([]),
+      status: [{value: 0, disabled: true}]
+    })
+  }
+  
+
+  // get all loai ngay lam
+  getAllLoaiNgayLam() {
+    this.absenceService.getAllNgayLam().subscribe(res => {
+      if (res.code == 200) {
+        this.dsNgayLam = res.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    });
+  }
+
+  // get all loai ngay nghi
+  getAllLoaiNgayNghi() {
+    this.absenceService.getAllNgayNghi().subscribe(res => {
+      if (res.code == 200) {
+        this.dsNgayNghi = res.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
     })
   }
 
@@ -85,76 +109,189 @@ export class DangKiLichLamViecComponent implements OnInit {
     this.isVisibleModalDKLV = true;
   }
 
-  handleOkModal() {
-    // fix cứng chưa có api
-    this.isVisibleModalDKLV = false;
-    let indexNhanvien = this.listNhanVien.findIndex(nv => nv.id == this.formModal.value.idNhanVien);
+  showModalDKLN() {
+    this.isVisibleModalDKLN = true;
+  }
 
-    let object = {
-      code: String(this.formModal.value.idNhanVien),
-      name: String(this.listNhanVien[indexNhanvien].name),
-      loai: Number(this.formModal.value.loai),
-      ghiChu: String(this.formModal.value.ghichu),
-      ngayDangKi: String(this.formModal.get('ngaydangki')[0]),
-      status: 0
+  handleOkModalLV() {
+    this.dklichlamviecService.addLichLamViec(this.formModalLV.value).subscribe(res => {
+      if (res.code == 200) {
+        this.isVisibleModalDKLV = false;
+        this.message.success('Tạo mới thành công.');
+        this.getAllLichLamViec();
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  handleOkModalLN() {
+    this.dklichlamviecService.addLichLamViec(this.formModalLN.value).subscribe(res => {
+      if (res.code == 200) {
+        this.isVisibleModalDKLN = false;
+        this.getAllLichNghi();
+        this.message.success('Tạo mới thành công.');
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  // get all danh sach lich lam viec - lich nghi
+  getAllLichLamViec() {
+    this.dklichlamviecService.getAllLichNgayLam().subscribe(response => {
+      if (response.code == 200) {
+        this.listOfDisplayDataLV = response.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  getAllLichNghi() {
+    this.dklichlamviecService.getAllLichNgayNghi().subscribe(response => {
+      if (response.code == 200) {
+        this.listOfDisplayDataLN = response.data;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  deleteLichLamViec(id: any) {
+    this.dklichlamviecService.deleteLichLamViec(id).subscribe(res => {
+      if (res.code == 200) {
+        this.message.success('Đã xóa thành công.');''
+        this.getAllLichLamViec();
+        this.getAllLichNghi();
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  pheDuyetDangKi(id) {
+    this.dklichlamviecService.updateStatus(id).subscribe(res => {
+      if (res.code == 200) {
+        this.message.success('Đã phê duyệt.');
+        this.getAllLichLamViec();
+        this.getAllLichNghi();
+      }
+    else {
+      this.message.error('Đã có lỗi xảy ra.')
     }
-    this.listOfDisplayData.push(object);
+    })
   }
 
-  handleCancelModal() {
+  resetPheDuyet(id) {
+    this.dklichlamviecService.refreshStatus(id).subscribe(res => {
+      if (res.code == 200) {
+        this.message.success('Đã reset phê duyệt.');
+        this.getAllLichLamViec();
+        this.getAllLichNghi();
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  // search
+  searchAllNgayLV(keyword) {
+    this.dklichlamviecService.searchAllNgayLam(keyword).subscribe(res => {
+      if (res.code == 200) {
+        this.listOfDisplayDataLV = res.data.allData;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.')
+      }
+    })
+  }
+
+  searchAllNgayLN(keyword) {
+    this.dklichlamviecService.searchAllNgayNghi(keyword).subscribe(res => {
+      if (res.code == 200) {
+        this.listOfDisplayDataLN = res.data.allData;
+      }
+      else {
+        this.message.error('Đã có lỗi xảy ra.');
+      }
+    })
+  }
+
+  handleCancelModalLV() {
     this.isVisibleModalDKLV = false;
   }
 
-  get tennhanvien() {
-    return this.formModal.get('idNhanVien');
+  handleCancelModalLN() {
+    this.isVisibleModalDKLN = false;
   }
 
-  get loai() {
-    return this.formModal.get('loai');
+  get user_id_lv() {
+    return this.formModalLV.get('user_id');
   }
 
-  get ghichu() {
-    return this.formModal.get('ghichu');
+  get description_lv() {
+    return this.formModalLV.get('description');
   }
 
-  get ngaydangki() {
-    return this.formModal.get('ngaydangki') as FormArray;
+  get list_lv() {
+    return this.formModalLV.get('list') as FormArray;
   }
 
-  get trangthai() {
-    return this.formModal.get('trangthai');
+  get status_lv() {
+    return this.formModalLV.get('status');
   }
 
-  newNgayDangKi(): FormGroup {
+  get user_id_ln() {
+    return this.formModalLN.get('user_id');
+  }
+
+  get description_ln() {
+    return this.formModalLN.get('description');
+  }
+
+  get list_ln() {
+    return this.formModalLN.get('list') as FormArray;
+  }
+
+  get status_ln() {
+    return this.formModalLN.get('status');
+  }
+
+  newdate(): FormGroup {
     return this.formBuilder.group({
-      ngayDangKi: [null, [Validators.required]],
-      soNgay: [null, [Validators.required, Validators.maxLength(2), Validators.max(31)]]
+      date: [null, [Validators.required]],
+      day: [null, [Validators.required, Validators.maxLength(2), Validators.max(31)]],
+      type: [null]
     });
   }
 
 
-  addNgayDangKi() {
-    this.ngaydangki.push(this.newNgayDangKi());
+
+
+  adddateLV() {
+    this.list_lv.push(this.newdate());
   }
 
-  removeNgayDangKi(i: number) {
-    this.ngaydangki.removeAt(i);
+  adddateLN() {
+    this.list_ln.push(this.newdate());
+  }
+
+  removedateLV(i: number) {
+    this.list_lv.removeAt(i);
+  }
+
+  removedateLN(i: number) {
+    this.list_ln.removeAt(i);
   }
 
   // validator
-  pheDuyetDangKi(index) {
-    if (this.listOfDisplayData[index].status == 0) {
-      this.listOfDisplayData[index].status = 1;
-    }
-  }
-
-  resetPheDuyet(i: number) {
-    this.listOfDisplayData[i].status = 0;
-  }
-
-  deleteDangKi(data) {
-    this.listOfDisplayData = this.listOfDisplayData.filter(nv => nv.name != data.name);
-  }
 
   setDate() {
     const date = new Date();
