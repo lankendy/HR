@@ -160,31 +160,10 @@
           </div>
           <div nz-row style="margin-top: 10px;">
             <div nz-col nzSpan="24">
-              <label nz-checkbox formControlName="createAccountAuto" name="checkedTaoTKMD">Tạo tài khoản mặc
+              <label nz-checkbox formControlName="createAccountDefault" (ngModelChange)="log()" name="checkedTaoTKMD">Tạo tài khoản mặc
                 định</label>
             </div>
           </div>
-          <ng-container *ngIf="createForm.get('createAccountAuto').value">
-            <div nz-row style="margin-top: 10px;">
-              <div nz-col nzSpan="24">
-                <nz-form-item>
-                  <nz-form-label>
-                    Chức năng
-                  </nz-form-label>
-                  <nz-form-control>
-                    <nz-select style="width: 100%;" nzPlaceHolder="Chọn chức năng" nzMode="multiple">
-                      <nz-option nzValue="giamDocChiNhanh" nzLabel="Giám đốc chi nhánh"></nz-option>
-                      <nz-option nzValue="truongPhongNhanSu" nzLabel="Trưởng phòng nhân sự"></nz-option>
-                      <nz-option nzValue="truongPhongTCKT" nzLabel="Trưởng phòng tài chính - kế toán"></nz-option>
-                      <nz-option nzValue="thuKho" nzLabel="Thủ kho"></nz-option>
-                      <nz-option nzValue="nhanVienBanHang" nzLabel="Nhân viên bán hàng"></nz-option>
-                      <nz-option nzValue="nhanVienThuNgan" nzLabel="Nhân viên thu ngân - Tư vấn dịch vụ"></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-          </ng-container>
         </div>
       </div>
     </nz-card>

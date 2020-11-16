@@ -45,7 +45,7 @@ export class ChiTietTaiKhoanComponent implements OnInit {
 
   // handle navigate
   goToList() {
-    this.router.navigate(['tai-khoan/danh-sach-tai-khoan']);
+    this.router.navigate(['dashboard/tai-khoan/danh-sach-tai-khoan']);
   }
 
   goToEdit() {

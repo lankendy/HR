@@ -79,7 +79,7 @@ export class CheDoNgayLamViecComponent implements OnInit {
     this.formModalCDLNN = this.fb.group({
       name: [null, [Validators.required]],
       value: [null, [Validators.required]],
-      type: [2]
+      type: [1]
     })
   }
 
@@ -87,7 +87,7 @@ export class CheDoNgayLamViecComponent implements OnInit {
     this.formModalCDLNL = this.fb.group({
       name: [null, [Validators.required]],
       value: [null, [Validators.required]],
-      type: [1]
+      type: [2]
     })
   }
 

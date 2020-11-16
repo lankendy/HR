@@ -85,11 +85,11 @@ export class DsTaiKhoanComponent implements OnInit {
 
   // handle navigate
   goToDetail(id: string) {
-    this.router.navigate(['tai-khoan/chi-tiet-tai-khoan', {id: id}]);
+    this.router.navigate(['dashboard/tai-khoan/chi-tiet-tai-khoan', {id: id}]);
   }
 
   goToCreate() {
-    this.router.navigate(['tai-khoan/them-tai-khoan']);
+    this.router.navigate(['dashboard/tai-khoan/them-tai-khoan']);
   }
 
   // handle delete account

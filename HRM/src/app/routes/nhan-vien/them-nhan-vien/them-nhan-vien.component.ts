@@ -46,7 +46,7 @@ export class ThemNhanVienComponent implements OnInit {
       salary: [null, [salaryValidator('5,500,000')]],
       gender: [null],
       createdBy: [null],
-      createAccountAuto: [false]
+      createAccountDefault: [0]
     });
     this.getAllChucVu();
   }
@@ -54,6 +54,9 @@ export class ThemNhanVienComponent implements OnInit {
   // call api 
   submitForm() {
     if (this.createForm.valid) {
+      if (this.createForm.get('createAccountDefault').value == true) {
+        this.createForm.get('createAccountDefault').setValue(1);
+      }
       this.nhanVienService.createUser(this.createForm.value).subscribe(response => {
         if (response.code == 200) {
           this.message.success('Thêm mới nhân viên thành công.')
@@ -61,6 +64,10 @@ export class ThemNhanVienComponent implements OnInit {
       });
       this.backList();
     }
+  }
+
+  log() {
+    console.log(this.createForm.value);
   }
 
   // get all chức vụ
